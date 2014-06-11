@@ -12,14 +12,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <% "<meta name='viewport' content='user-scalable=no, maximum-scale=1.7'>" %>
     <meta name='apple-mobile-web-app-capable' content='yes'>
-    <title>Scade — сайт быстрых знакомств</title>
+    <title>HighPoint Test Server</title>
     <link rel='icon' href='/favicon.ico' type='image/x-icon'>
     <link rel='icon' href='/logo.png' type='image_src'>
-    <meta content='Давайте дружить на Scade!' name='title'>
-    <meta content='Отличный сервис! Узнайте сколько человек пожелает познакомиться с вами уже через минуту после регистрации.' name='description'>
-    <meta content='/logo.png' name='og:image'>
-    <meta content='Давайте дружить на Scade!' name='og:title'>
-    <meta content='Отличный сервис! Узнайте сколько человек пожелает познакомиться с вами уже через минуту после регистрации.' name='og:description'>
     <% @call css %>
     <% @call js %>
   </head>

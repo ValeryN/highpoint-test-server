@@ -1,4 +1,4 @@
-# Scade Test Server
+# HighPoint Test Server
 
 Тестовый сервер для разработчиков мобильных и веб клиентов.
 

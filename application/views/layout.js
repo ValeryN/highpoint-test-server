@@ -20,35 +20,35 @@ Layout.prototype.renderBlockMain = function () { // @7:1
   "<meta name='viewport' content='user-scalable=no, maximum-scale=1.7'>"
 
   self.writer.write(
-    '<meta name=\'apple-mobile-web-app-capable\' content=\'yes\'><title>Scade — сайт быстрых знакомств</title><link rel=\'icon\' href=\'/favicon.ico\' type=\'image/x-icon\'><link rel=\'icon\' href=\'/logo.png\' type=\'image_src\'><meta content=\'Давайте дружить на Scade!\' name=\'title\'><meta content=\'Отличный сервис! Узнайте сколько человек пожелает познакомиться с вами уже через минуту после регистрации.\' name=\'description\'><meta content=\'/logo.png\' name=\'og:image\'><meta content=\'Давайте дружить на Scade!\' name=\'og:title\'><meta content=\'Отличный сервис! Узнайте сколько человек пожелает познакомиться с вами уже через минуту после регистрации.\' name=\'og:description\'>'
-  ); // @23:5
-  self.renderBlockCss(); // @23:5
-  self.renderBlockJs(); // @24:5
+    '<meta name=\'apple-mobile-web-app-capable\' content=\'yes\'><title>HighPoint Test Server</title><link rel=\'icon\' href=\'/favicon.ico\' type=\'image/x-icon\'><link rel=\'icon\' href=\'/logo.png\' type=\'image_src\'>'
+  ); // @18:5
+  self.renderBlockCss(); // @18:5
+  self.renderBlockJs(); // @19:5
   self.writer.write(
     '</head><body>'
-  ); // @27:5
-  self.renderBlockContent(); // @27:5
+  ); // @22:5
+  self.renderBlockContent(); // @22:5
   self.writer.write(
     '</body></html>'
   );
-}; // @30:1
+}; // @25:1
 
 
-Layout.prototype.renderBlockCss = function () { // @33:1
+Layout.prototype.renderBlockCss = function () { // @28:1
   var self = this;
   var d = this.data, vars = this.vars;
-}; // @34:1
+}; // @29:1
 
 
-Layout.prototype.renderBlockJs = function () { // @37:1
+Layout.prototype.renderBlockJs = function () { // @32:1
   var self = this;
   var d = this.data, vars = this.vars;
-}; // @38:1
+}; // @33:1
 
 
-Layout.prototype.renderBlockContent = function () { // @41:1
+Layout.prototype.renderBlockContent = function () { // @36:1
   var self = this;
   var d = this.data, vars = this.vars;
-}; // @42:1
+}; // @37:1
 
 module.exports = Layout;
