@@ -1,0 +1,14 @@
+.devPanel-tab {
+  cursor: pointer;
+  position: relative;
+}
+
+.devPanel-tab-selected {
+  cursor: default;
+}
+
+.devPanel-tabBar-horizontal {
+  .devPanel-tab {
+    float: left;
+  }
+}

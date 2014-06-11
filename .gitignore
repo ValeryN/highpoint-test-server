@@ -1,0 +1,11 @@
+/config.js
+/public/s_dev
+/public/t
+/tmp
+
+.DS_Store
+.idea
+.sass-cache
+**.swp
+.
+node_modules

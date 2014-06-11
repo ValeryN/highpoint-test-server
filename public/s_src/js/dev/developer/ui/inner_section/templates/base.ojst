@@ -1,0 +1,12 @@
+<% @require ojster.Template %>
+
+<% @template dev.developer.ui.innerSection.templates.Base %>
+<% @inherits ojster.Template %>
+
+
+<% @block main { %>
+<div class="<% @css %>">
+  <div class="<% @css +header %>"><%-d.header%></div>
+  <div class="<% @css +content %>"></div>
+</div>
+<% @block main } %>

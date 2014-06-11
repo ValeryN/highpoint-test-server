@@ -1,0 +1,22 @@
+<% @require ojster.Template %>
+<% @require goog.array %>
+<% @require goog.ui.IdGenerator %>
+
+<% @template dev.developer.ui.radioGroupItem.templates.Base %>
+<% @inherits ojster.Template %>
+
+
+<% @block main { %>
+<div class="<% @css %>">
+  <div class="<% @css +header %>"><%=d.header%></div>
+  <% goog.array.forEach(d.options, function(option, i) { %>
+    <% var id = goog.ui.IdGenerator.getInstance().getNextUniqueId(); %>
+    <div class="<% @css +option %>">
+      <input id="<%-id%>" name="<%-d.name%>" type="radio" value="<%-(i + 1)%>" class="<% @css +input %>">
+      <label for="<%-id%>" class="<% @css +label %>">
+        <%=option.key%>
+      </label>
+    </div>
+  <% }, this); %>
+</div>
+<% @block main } %>

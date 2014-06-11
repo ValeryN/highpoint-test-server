@@ -1,0 +1,5 @@
+@mixin overflow-scroll() {
+  @include experimental(overflow-scrolling, $origin, not -moz, -webkit, not -o, not -ms, not -khtml, not official);
+
+  overflow: scroll;
+}

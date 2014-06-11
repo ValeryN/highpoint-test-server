@@ -1,0 +1,9 @@
+<%
+  var parts = [];
+
+  for (var name in map) {
+    parts.push('"' + name + '": "' + map[name] + '"');
+  }
+%>goog.setCssNameMapping({
+  <%-parts.join(",\n\t")%>
+});

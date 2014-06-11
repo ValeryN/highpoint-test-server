@@ -1,0 +1,22 @@
+$bg-color: #e6e9ed;
+$fg-color: #353535;
+$link-color: $fg-color;
+$link-hover-color: #d14751;
+$link-visited-color: $fg-color;
+$font-family: Helvetica, Arial, sans-serif;
+$neucha-font-family: Neucha, Helvetica, Arial, sans-serif;
+
+// Repeat variables with easier naming
+$color-bg: $bg-color;
+$color-fg: $fg-color;
+$color-link: $color-fg;
+$color-link-hover: #d14751;
+$color-link-visited: $color-fg;
+$font-family: Helvetica, Arial, sans-serif;
+$font-family-neucha: Neucha, Helvetica, Arial, sans-serif;
+
+
+@import "compass/css3";
+@import "compass/css3/user-interface";
+@import "css3";
+@import "transitions";

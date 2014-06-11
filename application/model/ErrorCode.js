@@ -1,0 +1,7 @@
+module.exports = {
+  WRONG_USER_OR_PASSWORD: 1,
+  WRONG_TOKEN: 2,
+  WRONG_PARAMS: 3,
+  SERVER_ERROR: 4,
+  NOT_FOUND: 5,
+}

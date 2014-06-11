@@ -1,0 +1,46 @@
+var MainTemplate = require('../views/main');
+var config = require('../config');
+var models = require('../model');
+
+
+/**
+ * @param {Request} req
+ * @return {boolean}
+ */
+var isCompiled = function(req) {
+  return !req.query || undefined === req.query.source;
+};
+
+exports.panel = function(req, res) {
+  var template = new MainTemplate({
+    apiAddress: config.apiAddress,
+    compiled: isCompiled(req),
+    config: config,
+  });
+  res.send(template.render());
+};
+
+exports.error = function(err, req, res, next) {
+  console.error(err.stack);
+
+  var status = err.status || 0;
+  var result = err.result || null;
+
+  if (401 == status) {
+    result = result || {
+      code: ErrorCode.WRONG_TOKEN
+    };
+  } else if (404 == status) {
+    result = result || {
+      code: ErrorCode.NOT_FOUND
+    };
+  } else if (!status) {
+    status = 500;
+    result = result || {
+      code: ErrorCode.SERVER_ERROR
+    };
+  }
+
+  res.status(status);
+  res.json(result);
+};

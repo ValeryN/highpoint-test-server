@@ -1,0 +1,38 @@
+<% @require Layout = './layout' %>
+
+<% @template Main %>
+<% @inherits Layout %>
+
+
+<% @block title { %>
+Панель тестирования
+<% @block title } %>
+
+
+<% @block css { %>
+<% @base %>
+<% if (d.compiled) { %>
+  <link media='all' rel='stylesheet' type='text/css' href='/s/css/panel.css'>
+<% } else { %>
+  <link media='all' rel='stylesheet' type='text/css' href='/s_dev/css/panel.css'>
+<% } %>
+<% @block css } %>
+
+
+<% @block js { %>
+<% @base %>
+<% if (d.compiled) { %>
+  <script src='/s/js/panel.js'></script>
+<% } else { %>
+  <script src='/s_src/js_contrib/closure-library/closure/goog/base.js'></script>
+  <script src='/s_dev/js/panel.js'></script>
+  <script src='/s_src/js/apps/panel/init.js'></script>
+<% } %>
+<% @block js } %>
+
+
+<% @block content { %>
+<script>
+devPanelInstall();
+</script>
+<% @block content } %>
