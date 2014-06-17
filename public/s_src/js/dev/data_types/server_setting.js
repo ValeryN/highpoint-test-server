@@ -32,6 +32,10 @@ dev.dataTypes.ServerSetting = function(type, name, options) {
  * @enum {string}
  */
 dev.dataTypes.ServerSetting.Type = {
+  ME_USER: 'meUser',
+
+
+
   AVATAR_CROP: 'avatarCrop',
   AVATAR_UPLOAD: 'avatarUpload',
   CALL_REQUEST_REMOVE: 'callRequestRemove',
@@ -61,7 +65,6 @@ dev.dataTypes.ServerSetting.Type = {
   LOCATIONS_REGIONS: 'locationsRegions',
   MATRIX_USERS: 'matrixUsers',
   ME_FILTER_UPDATE: 'meFilterUpdate',
-  ME_USER: 'meUser',
   MESSAGES_HISTORY: 'messagesHistory',
   MESSAGES_UNREAD: 'messagesUnread',
   OUTGOING_CALL_ID: 'outgoingCallId',

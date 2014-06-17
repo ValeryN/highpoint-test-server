@@ -2,10 +2,10 @@ var ClientMessage = require('../components/socket').ClientMessage;
 
 
 var map = {
-  activityEnd: ClientMessage.ACTIVITY_END,
-  activityStart: ClientMessage.ACTIVITY_START,
-  allNotificationsRead: ClientMessage.ALL_NOTIFICATIONS_READ,
-  notificationRead: ClientMessage.NOTIFICATION_READ
+  sendMessage: ClientMessage.SEND_MESSAGE,
+  messagesRead: ClientMessage.MESSAGES_READ,
+  typingFinish: ClientMessage.TYPING_FINISH,
+  typingStart: ClientMessage.TYPING_START
 };
 
 var getHandler = function(method, clientMessage) {

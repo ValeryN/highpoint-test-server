@@ -1,4 +1,4 @@
-goog.provide('dev.developer.server.Profile');
+goog.provide('dev.developer.server.Me');
 
 goog.require('goog.array');
 goog.require('dev.developer.ui.InnerSection');
@@ -12,16 +12,16 @@ goog.require('dev.api.webSocket.ServerMessage');
  * @constructor
  * @extends {dev.developer.server.Section}
  */
-dev.developer.server.Profile = function(opt_renderer, opt_domHelper) {
-  dev.developer.server.Profile.base(
+dev.developer.server.Me = function(opt_renderer, opt_domHelper) {
+  dev.developer.server.Me.base(
     this, 'constructor', opt_renderer, opt_domHelper);
 };
-goog.inherits(dev.developer.server.Profile, dev.developer.server.Section);
+goog.inherits(dev.developer.server.Me, dev.developer.server.Section);
 
 
 /** @inheritDoc */
-dev.developer.server.Profile.prototype.createDom = function() {
-  dev.developer.server.Profile.base(this, 'createDom');
+dev.developer.server.Me.prototype.createDom = function() {
+  dev.developer.server.Me.base(this, 'createDom');
 
   /** @type {dev.developer.ui.Inner} */
   var innerContainer = this.getInnerContainer();
@@ -30,7 +30,7 @@ dev.developer.server.Profile.prototype.createDom = function() {
 
   /** @type {!Array.<goog.ui.Component>} */
   var innerItems = [
-    this.createLinkItem('Обновить данные пользователя', this._onUserUpdate)
+    this.createLinkItem('Обновить данные пользователя', this._onMeUpdate)
   ];
 
   goog.array.forEach(innerItems, function(innerItem) {
@@ -42,6 +42,6 @@ dev.developer.server.Profile.prototype.createDom = function() {
  * @param {goog.events.Event} evt
  * @private
  */
-dev.developer.server.Profile.prototype._onUserUpdate = function(evt) {
+dev.developer.server.Me.prototype._onMeUpdate = function(evt) {
   this.send(dev.api.webSocket.ServerMessage.ME_UPDATE);
 };

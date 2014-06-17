@@ -129,7 +129,7 @@ dev.developer.server.Section.prototype.applySettings = function(settings,
     valuesMap) {
   if (this._innerContainer) {
     var innerSection = new dev.developer.ui.InnerSection(
-      'Настройки выдачи Ajax-запросов');
+      'Настройки выдачи HTTP запросов');
     this._innerContainer.addChild(innerSection, true);
 
     goog.array.forEach(settings, function(setting) {

@@ -5,7 +5,7 @@ goog.require('goog.array');
 goog.require('goog.object');
 goog.require('dev.ui.tabBar.Tab');
 goog.require('dev.dataTypes.ServerSetting.Type');
-goog.require('dev.developer.server.Profile');
+goog.require('dev.developer.server.Me');
 goog.require('dev.developer.server.Section');
 goog.require('dev.developer.ui.TabPanel');
 
@@ -151,7 +151,7 @@ dev.developer.server.TabPanel.prototype.createSectionContainer = function(
 
   switch (type) {
     case dev.developer.server.TabPanel.SectionType.ME:
-      sectionContainer = new dev.developer.server.Profile();
+      sectionContainer = new dev.developer.server.Me();
       break;
   }
 

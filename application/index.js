@@ -46,21 +46,14 @@ var io = socketIo.listen(server, {
 });
 
 var socketHandlers = {};
-socketHandlers[ClientMessage.ACTIVITY_END]          = sockets.common.activityEnd;
-socketHandlers[ClientMessage.ACTIVITY_START]        = sockets.common.activityStart;
-socketHandlers[ClientMessage.CALL_ACCEPT]           = sockets.calls.accept;
-socketHandlers[ClientMessage.CALL_CANCEL]           = sockets.calls.cancel;
-socketHandlers[ClientMessage.CALL_ESCAPE]           = sockets.calls.escape;
-socketHandlers[ClientMessage.CALL_MESSAGE]          = sockets.calls.message;
-socketHandlers[ClientMessage.CALL_REJECT]           = sockets.calls.reject;
-socketHandlers[ClientMessage.CALL_STOP]             = sockets.calls.stop;
-socketHandlers[ClientMessage.CALL_TYPING_FINISH]    = sockets.calls.typingFinish;
-socketHandlers[ClientMessage.CALL_TYPING_START]     = sockets.calls.typingStart;
-socketHandlers[ClientMessage.CONTACT_MESSAGE]       = sockets.contacts.message;
-socketHandlers[ClientMessage.CONTACT_MESSAGE_READ]  = sockets.contacts.messageRead;
-socketHandlers[ClientMessage.CONTACT_TYPING_FINISH] = sockets.contacts.typingFinish;
-socketHandlers[ClientMessage.CONTACT_TYPING_START]  = sockets.contacts.typingStart;
-socketHandlers[ClientMessage.NOTIFICATION_READ]     = sockets.common.notificationRead;
+socketHandlers[ClientMessage.ACTIVITY_END]           = sockets.common.activityEnd;
+socketHandlers[ClientMessage.ACTIVITY_START]         = sockets.common.activityStart;
+socketHandlers[ClientMessage.SEND_MESSAGE]           = sockets.users.sendMessage;
+socketHandlers[ClientMessage.MESSAGES_READ]          = sockets.users.messagesRead;
+socketHandlers[ClientMessage.NOTIFICATION_READ]      = sockets.common.notificationRead;
+socketHandlers[ClientMessage.ALL_NOTIFICATIONS_READ] = sockets.common.allNotificationsRead;
+socketHandlers[ClientMessage.TYPING_FINISH]          = sockets.users.typingFinish;
+socketHandlers[ClientMessage.TYPING_START]           = sockets.users.typingStart;
 
 var socketServer = new Socket(io);
 app.set('socketIo', io.sockets);

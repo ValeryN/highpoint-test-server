@@ -1,6 +1,7 @@
 var util = require('util');
 
 var models = require('../model');
+var date = require('../core/date');
 
 
 /**
@@ -20,44 +21,43 @@ Socket.ClientMessage = {
   /**
    * Закончилась активность пользователя.
    */
-  ACTIVITY_END: 'activity_end',
+  ACTIVITY_END: 'activityEnd',
 
   /**
    * Началась активность пользователя.
    */
-  ACTIVITY_START: 'activity_start',
+  ACTIVITY_START: 'activityStart',
 
-  /**
-   * Сообщение пользователю.
-   * userId (number)
-   * chatMessage (!MessageBody)
-   * createAt (!goog.date.DateTime)
+   /**
+   * Прочтение всех уведомлений.
    */
-  MESSAGE: 'message',
+  ALL_NOTIFICATIONS_READ: 'allNotificationsRead',
 
   /**
    * Прочтение сообщений от пользователя.
-   * userId (number)
    */
-  MESSAGE_READ: 'message_read',
-
-  /**
-   * Текущий пользователь закончил печатать сообщение для пользователя.
-   * userId (number)
-   */
-  TYPING_FINISH: 'typing_finish',
-
-  /**
-   * Текущий пользователь начал печатать сообщение для пользователя.
-   * userId (number)
-   */
-  TYPING_START: 'typing_start',
+  MESSAGES_READ: 'messagesRead',
 
   /**
    * Прочтение уведомления.
    * notificationId (number)
    */
-  NOTIFICATION_READ: 'notification_read'
+  NOTIFICATION_READ: 'notificationRead',
+
+  /**
+   * Сообщение пользователю.
+   */
+  SEND_MESSAGE: 'sendMessage',
+
+  /**
+   * Текущий пользователь закончил печатать сообщение для пользователя.
+   */
+  TYPING_FINISH: 'typingFinish',
+
+  /**
+   * Текущий пользователь начал печатать сообщение для пользователя.
+   */
+  TYPING_START: 'typingStart',
 };
 
 
@@ -67,54 +67,64 @@ Socket.ClientMessage = {
 Socket.ServerMessage = {
 
   /**
-   * Закрытие соединения.
-   * reason (string) Пока только 'new_session'
+   * Ошибка.
    */
-  CLOSE: 'close',
+  ERROR: 'error',
+
+  /**
+   * Обновлена часть данных текущего пользователя.
+   */
+  ME_UPDATE: 'meUpdate',
 
   /**
    * Новое сообщение от пользователя.
-   * userId (number) Идентификатор пользователя, от которого пришло сообщение.
-   * chatMessage (!MessageBody)
-   * createdAt (!goog.date.DateTime)
    */
   MESSAGE: 'message',
 
   /**
-   * Ошибка при принятии нового сообщения от пользователя
-   * userId (number) Идентификатор пользователя, от которого пришло сообщение.
-   * chatMessage (!Messagebody)
-   * createdAt (!goog.date.DateTime)
-   * reason (string) 'banned', 'ratelimit', 'not_in_contacts', 'duplicate'
+   * Сообщение отправлено.
    */
-  MESSAGE_ERROR: 'message_error',
+  MESSAGE_SENT: 'messageSent',
 
   /**
-   * Сообщение прочитано.
-   * userId (number)
-   * readAt (!goog.date.DateTime)
+   * Сообщения прочитаны.
    */
-  MESSAGE_READ: 'message_read',
+  MESSAGES_READ: 'messagesRead',
 
   /**
-   * Сообщение отправлено пользователю.
-   * userId (number) Идентификатор пользователя, который отправил сообщение.
-   * chatMessage (!MessageBody)
-   * createdAt (!goog.date.DateTime)
+   * Обновление настроек текущего пользователя.
    */
-  MESSAGE_SENT: 'message_sent',
+  MY_SETTINGS_UPDATE: 'mySettingsUpdate',
 
   /**
-   * Обновлена часть данных текущего пользователя.
-   * data (Object)
+   * Новое уведомление.
    */
-  ME_UPDATE: 'update_current_user',
+  NOTIFICATION: 'notification',
 
   /**
-   * Новое уведомление
-   * notification (Notification)
+   * Перезагрузка приложения.
    */
-  NOTIFICATION: 'notification'
+  RELOAD: 'reload',
+
+  /**
+   * Пользователь закончил писать сообщение.
+   */
+  TYPING_FINISH: 'typingFinish',
+
+  /**
+   * Пользователь начал писать сообщение.
+   */
+  TYPING_START: 'typingStart',
+
+  /**
+   * Пользователь ушел в оффлайн.
+   */
+  USER_OFFLINE: 'userOffline',
+
+  /**
+   * Пользователь появился в онлайне.
+   */
+  USER_ONLINE: 'userOnline'
 };
 
 
@@ -143,106 +153,89 @@ var createBan = function(reason, from, to) {
   };
 };
 
-/**
- * @param {string=} opt_reason
- */
-Socket.prototype.close = function(opt_reason) {
-  var reason = opt_reason || 'new_session';
-  this._io.sockets.emit(Socket.ServerMessage.CLOSE, reason);
-};
-
-/**
- * @param {number=} opt_userId
- * @param {number=} opt_chatMessageIndex
- */
-Socket.prototype.message = function(opt_userId, opt_chatMessageIndex) {
-  var userId = opt_userId || models.contactUsers.getRandom().id;
-  var chatMessage = undefined === opt_chatMessageIndex
-    ? models.chatMessages.getRandom()
-    : models.chatMessages.getAt(opt_chatMessageIndex);
-
-  if (chatMessage) {
-    this._io.sockets.emit(
-      Socket.ServerMessage.MESSAGE, userId, chatMessage, +(new Date()));
-  }
-};
-
-/**
- * @param {number=} opt_userId
- * @param {number=} opt_chatMessageIndex
- * @param {string=} opt_reason
- */
-Socket.prototype.messageError = function(opt_userId,
-    opt_chatMessageIndex, opt_reason) {
-  var userId = opt_userId || models.contactUsers.getRandom().id;
-  var chatMessage = undefined === opt_chatMessageIndex
-    ? models.chatMessages.getRandom()
-    : models.chatMessages.getAt(opt_chatMessageIndex);
-  var reason = opt_reason || 'banned';
-
-  if (chatMessage) {
-    this._io.sockets.emit(Socket.ServerMessage.MESSAGE_ERROR, userId,
-      chatMessage, +(new Date()), reason);
-  }
-};
-
-/**
- * @param {number=} opt_userId
- */
-Socket.prototype.messageRead = function(opt_userId) {
-  var userId = opt_userId || models.contactUsers.getRandom().id;
-
-  this._io.sockets.emit(
-    Socket.ServerMessage.MESSAGE_READ, userId, +(new Date()));
-};
-
-/**
- * @param {number=} opt_userId
- * @param {number=} opt_chatMessageIndex
- */
-Socket.prototype.messageSent = function(opt_userId,
-    opt_chatMessageIndex) {
-  var userId = opt_userId || models.contactUsers.getRandom().id;
-  var chatMessage = undefined === opt_chatMessageIndex
-    ? models.chatMessages.getRandom()
-    : models.chatMessages.getAt(opt_chatMessageIndex);
-
-  if (chatMessage) {
-    this._io.sockets.emit(
-      Socket.ServerMessage.MESSAGE_SENT, userId, chatMessage, +(new Date()));
-  }
-};
-
-/**
- * @param {number=} opt_userId
- */
-Socket.prototype.typingFinish = function(opt_userId) {
-  var userId = opt_userId || models.contactUsers.getRandom().id;
-  this._io.sockets.emit(Socket.ServerMessage.TYPING_FINISH, userId);
-};
-
-/**
- * @param {number=} opt_userId
- */
-Socket.prototype.typingStart = function(opt_userId) {
-  var userId = opt_userId || models.contactUsers.getRandom().id;
-  this._io.sockets.emit(Socket.ServerMessage.TYPING_START, userId);
-};
 
 Socket.prototype.meUpdate = function() {
   this._io.sockets.emit(Socket.ServerMessage.ME_UPDATE, {
-    name: 'Паша'
+    user: models.myUsers.get(1)
   });
 };
 
 /**
- * @param {number=} opt_notificationId
+ * @param {Message} message
  */
-Socket.prototype.notification = function(opt_notificationId) {
-  var notification = opt_notificationId ?
-    models.notifications.get(opt_notificationId) : models.notifications.getRandom();
+Socket.prototype.message = function(message) {
+  this._io.sockets.emit(Socket.ServerMessage.MESSAGE, {
+    message: message
+  });
+};
 
-  if (notification) {
-    this._io.sockets.emit(Socket.ServerMessage.NOTIFICATION, notification);
-  }
+/**
+ * @param {Message} message
+ */
+Socket.prototype.messageSent = function(message) {
+  this._io.sockets.emit(Socket.ServerMessage.MESSAGE_SENT, {
+    message: message
+  });
+};
+
+/**
+ * @param {number} userId
+ * @param {Date=} opt_date
+ */
+Socket.prototype.messagesRead = function(userId, opt_date) {
+  var date = opt_date || new Date();
+
+  this._io.sockets.emit(Socket.ServerMessage.MESSAGES_READ, {
+    date: date.dateTimeToIsoString(date),
+    destinationId: userId,
+  });
+};
+
+/**
+ * @param {Notification} notification
+ */
+Socket.prototype.notification = function(notification) {
+  this._io.sockets.emit(Socket.ServerMessage.NOTIFICATION, {
+    notification: notification
+  });
+};
+
+Socket.prototype.reload = function() {
+  this._io.sockets.emit(Socket.ServerMessage.RELOAD);
+};
+
+/**
+ * @param {number} userId
+ */
+Socket.prototype.userOffline = function(userId) {
+  this._io.sockets.emit(Socket.ServerMessage.USER_OFFLINE, {
+    userId: userId
+  });
+};
+
+/**
+ * @param {number} userId
+ */
+Socket.prototype.userOnline = function(userId) {
+  this._io.sockets.emit(Socket.ServerMessage.USER_ONLINE, {
+    userId: userId
+  });
+};
+
+/**
+ * @param {number} userId
+ */
+Socket.prototype.typingFinish = function(userId) {
+  this._io.sockets.emit(Socket.ServerMessage.TYPING_FINISH, {
+    userId: userId
+  });
+};
+
+/**
+ * @param {number} userId
+ */
+Socket.prototype.typingStart = function(userId) {
+  this._io.sockets.emit(Socket.ServerMessage.TYPING_START, {
+    userId: userId
+  });
 };

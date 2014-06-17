@@ -18,6 +18,18 @@ var Option;
 var DictionaryItem;
 
 var Dictionary = exports.Dictionary = {
+  ME_USER: {
+    type: 'meUser',
+    name: 'Информация о текущем пользователе',
+    options: [
+      { name: 'пользователь', value: 200 },
+      { name: 'неавторизованный пользователь', value: 401 },
+      { name: 'ошибка сервера', value: 500 },
+    ]
+  },
+
+
+
   AVATAR_CROP: {
     type: 'avatarCrop',
     name: 'Кроп аватара',
@@ -71,15 +83,6 @@ var Dictionary = exports.Dictionary = {
       { name: 'успешное выполнение', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
-    ]
-  },
-  ME_USER: {
-    type: 'meUser',
-    name: 'Информация о текущем пользователе',
-    options: [
-      { name: 'пользователь', value: 200 },
-      { name: 'неавторизованный пользователь', value: 401 },
-      { name: 'ошибка сервера', value: 500 },
     ]
   },
   ME_USER_SETTINGS_UPDATE: {
