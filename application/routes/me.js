@@ -142,8 +142,8 @@ exports.updateFilter = function(req, res) {
       break;
 
     default:
-      var cityIds = req.body.cityIds.split(',');
-      var genders = req.body.genders.split(',');
+      var cityIds = req.body.cityIds ? req.body.cityIds.split(',') : [];
+      var genders = req.body.genders ? req.body.genders.split(',') : [];
       var maxAge = req.body.maxAge;
       var minAge = req.body.minAge;
       var viewType = req.body.viewType;

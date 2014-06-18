@@ -1,3 +1,5 @@
+var ErrorCode = require('../model/ErrorCode');
+var devSettings = require('../settings');
 var models = require('../Model');
 
 
@@ -34,7 +36,7 @@ exports.signin = function(req, res, next) {
   if (200 == status) {
     res.json(result);
   } else {
-    var error = new Error();
+    var error = new Error('Wrong user or password');
     error.result = result;
     error.status = status;
     next(error);

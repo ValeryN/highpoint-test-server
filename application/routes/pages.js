@@ -29,16 +29,22 @@ exports.error = function(err, req, res, next) {
 
   if (401 == status) {
     result = result || {
-      code: ErrorCode.WRONG_TOKEN
+      error: {
+        code: ErrorCode.WRONG_TOKEN
+      }
     };
   } else if (404 == status) {
     result = result || {
-      code: ErrorCode.NOT_FOUND
+      error: {
+        code: ErrorCode.NOT_FOUND
+      }
     };
   } else if (!status) {
     status = 500;
     result = result || {
-      code: ErrorCode.SERVER_ERROR
+      error: {
+        code: ErrorCode.SERVER_ERROR
+      }
     };
   }
 
