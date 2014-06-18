@@ -2,7 +2,7 @@ var fs = require('fs');
 var imagemagick = require('imagemagick');
 
 var ServerMessage = require('../components/socket').ServerMessage;
-var models = require('../model');
+var models = require('../Model');
 var config = require('../config');
 var devSettings = require('../settings');
 

@@ -1,4 +1,4 @@
-var Model = require('./model').Model;
+var Model = require('./Model');
 
 
 module.exports = new Model([

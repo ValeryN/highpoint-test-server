@@ -1,6 +1,6 @@
 var config = require('../config');
 var devSettings = require('../settings');
-var models = require('../model');
+var models = require('../Model');
 
 var uploadedAvatar = new models.UploadedAvatar();
 

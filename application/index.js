@@ -97,8 +97,8 @@ app.get('/v201405/me', routes.me.get);
 app.put('/v201405/me/filter', routes.me.updateFilter);
 
 app.get('/v201405/points', routes.points.getList);
-app.get('/v201405/points/:pointId/like', routes.points.like);
-app.get('/v201405/points/:pointId/unlike', routes.points.unlike);
+app.post('/v201405/points/:pointId/like', routes.points.like);
+app.post('/v201405/points/:pointId/unlike', routes.points.unlike);
 
 app.get('/v201405/settings', routes.settings.get);
 

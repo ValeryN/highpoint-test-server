@@ -1,4 +1,4 @@
-var Model = require('./model').Model;
+var Model = require('./Model');
 var FilterViewType = require('./FilterViewType');
 var Gender = require('./Gender');
 

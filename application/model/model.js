@@ -3,7 +3,7 @@
  * @param {string=} opt_idKey Defaults to 'id'.
  * @constructor
  */
-var Model = function(items, opt_idKey) {
+var Model = module.exports = function(items, opt_idKey) {
   this._items = items;
   this._itemsMap = {};
 
@@ -141,5 +141,3 @@ Model.prototype._padNumber = function(num, length) {
 
   return (new Array(Math.max(0, length - index) + 1).join('0')) + s;
 };
-
-exports.Model = Model;

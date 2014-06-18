@@ -1,6 +1,6 @@
 var Currency = require('./Currency');
 var Gender = require('./Gender');
-var Model = require('./model').Model;
+var Model = require('./Model');
 var Visibility = require('./Visibility');
 var avatars = require('./avatars');
 var careerItems = require('./careerItems');

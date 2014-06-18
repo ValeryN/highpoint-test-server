@@ -1,7 +1,7 @@
 var http = require('http');
 
 var config = require('../config');
-var models = require('../model');
+var models = require('../Model');
 
 
 /**
@@ -76,11 +76,11 @@ Locations.prototype.findCities = function(query, limit) {
   };
   var func2 = function(city) {
     return city.name.toLowerCase() != query &&
-      0 == city.full_name.toLowerCase().indexOf(query);
+      0 == city.fullName.toLowerCase().indexOf(query);
   };
   var func3 = function(city) {
     return city.name.toLowerCase() != query &&
-      0 < city.full_name.toLowerCase().indexOf(query);
+      0 < city.fullName.toLowerCase().indexOf(query);
   };
 
   /** @type {!Array.<City>} */
@@ -165,19 +165,19 @@ Locations.prototype._setLocations = function(countries, regions, cities) {
   cities.forEach(function(city) {
     /** @type {!Array.<string>} */
     var names = [city.name];
-    var region = this._regionsMap[city.region_id];
+    var region = this._regionsMap[city.regionId];
 
     if (region) {
       names.push(region.name);
 
-      var country = this._countriesMap[region.country_id];
+      var country = this._countriesMap[region.countryId];
 
       if (country) {
         names.push(country.name);
       }
     }
 
-    city.full_name = names.join(', ');
+    city.fullName = names.join(', ');
     this._citiesMap[city.id] = city;
   }, this);
 };

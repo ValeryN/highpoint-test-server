@@ -1,4 +1,4 @@
-var Model = require('./model').Model;
+var Model = require('./Model');
 var NotificationType = require('./NotificationType');
 var users = require('./users');
 

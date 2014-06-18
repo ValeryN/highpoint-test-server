@@ -1,6 +1,6 @@
 var util = require('util');
 
-var models = require('../model');
+var models = require('../Model');
 var date = require('../core/date');
 
 
@@ -207,24 +207,6 @@ Socket.prototype.reload = function() {
 /**
  * @param {number} userId
  */
-Socket.prototype.userOffline = function(userId) {
-  this._io.sockets.emit(Socket.ServerMessage.USER_OFFLINE, {
-    userId: userId
-  });
-};
-
-/**
- * @param {number} userId
- */
-Socket.prototype.userOnline = function(userId) {
-  this._io.sockets.emit(Socket.ServerMessage.USER_ONLINE, {
-    userId: userId
-  });
-};
-
-/**
- * @param {number} userId
- */
 Socket.prototype.typingFinish = function(userId) {
   this._io.sockets.emit(Socket.ServerMessage.TYPING_FINISH, {
     userId: userId
@@ -236,6 +218,24 @@ Socket.prototype.typingFinish = function(userId) {
  */
 Socket.prototype.typingStart = function(userId) {
   this._io.sockets.emit(Socket.ServerMessage.TYPING_START, {
+    userId: userId
+  });
+};
+
+/**
+ * @param {number} userId
+ */
+Socket.prototype.userOffline = function(userId) {
+  this._io.sockets.emit(Socket.ServerMessage.USER_OFFLINE, {
+    userId: userId
+  });
+};
+
+/**
+ * @param {number} userId
+ */
+Socket.prototype.userOnline = function(userId) {
+  this._io.sockets.emit(Socket.ServerMessage.USER_ONLINE, {
     userId: userId
   });
 };
