@@ -128,3 +128,5 @@ server.listen(config.port, config.ip, function() {
   console.log(
     "HighPoint Test Server listening on " + config.ip + ':' + config.port);
 });
+
+exports.server = server;

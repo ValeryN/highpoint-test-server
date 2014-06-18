@@ -17,6 +17,7 @@
     "cookie-session": "*",
     "cors": "*",
     "express": ">=3.0.4",
+    "expresso": "*",
     "frontdeployer": "git://github.com/redscorpix/frontdeployer.git",
     "grunt": "*",
     "grunt-contrib-compass": "*",
