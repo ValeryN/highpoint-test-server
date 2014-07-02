@@ -1,7 +1,7 @@
+var bodyParser = require('body-parser');
 var cors = require('cors');
 var express = require('express');
 var http = require('http');
-var multipart = require('connect-multiparty');
 var path = require('path');
 var socketIo = require('socket.io');
 
@@ -12,8 +12,6 @@ var config = require('./config');
 var routes = require('./routes');
 var sockets = require('./sockets');
 
-var multipartMiddleware = multipart();
-
 var app = express();
 var server = http.createServer(app);
 
@@ -22,7 +20,11 @@ app.use(require('compression')());
 app.enable('case sensitive routing');
 app.use(require('morgan')('tiny'));
 app.use(require('method-override')());
-app.use(require('body-parser')());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+app.use(require('connect-multiparty')());
 app.use(require('cookie-parser')('flksjf;jsE76_2ff'));
 app.use(require('cookie-session')({
   secret: 'mwrY2fns'
