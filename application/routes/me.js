@@ -147,7 +147,9 @@ exports.updateFilter = function(req, res) {
       var maxAge = req.body.maxAge;
       var minAge = req.body.minAge;
       var viewType = req.body.viewType;
-      result = {};
+      result = {
+        data: true
+      };
 
       break;
   }
@@ -170,13 +172,17 @@ exports.getPhotos = function(req, res) {
 };
 
 exports.sortPhotos = function(req, res) {
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
 
 exports.removePhoto = function(req, res) {
   var photoId = parseInt(req.params.photoId, 10);
 
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
 
 exports.uploadPhoto = function(req, res) {

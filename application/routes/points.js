@@ -1,11 +1,15 @@
 var models = require('../Model');
 
 exports.like = function(req, res) {
-  res.json({});
+  res.json({
+    data: true
+  });
 };
 
 exports.unlike = function(req, res) {
-  res.json({});
+  res.json({
+    data: true
+  });
 };
 
 exports.getList = function(req, res) {

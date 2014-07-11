@@ -11,6 +11,11 @@ exports.changeEmail = function(req, res) {
     case 403:
       status = setting;
       break;
+    default:
+      result = {
+        data: true
+      };
+      break;
   }
 
   if (200 == status) {
@@ -24,11 +29,15 @@ exports.changeEmail = function(req, res) {
 };
 
 exports.sendEmailConfirmation = function(req, res) {
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
 
 exports.sendEmailForPassword = function(req, res) {
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
 
 exports.confirmEmail = function(req, res) {
@@ -42,6 +51,9 @@ exports.confirmEmail = function(req, res) {
       break;
     default:
       var token = req.query.confirmation_token;
+      result = {
+        data: true
+      }
       break;
   }
 
@@ -108,7 +120,7 @@ exports.getMessageHistory = function(req, res) {
 
 exports.changePassword = function(req, res) {
   res.json({
-    success: true
+    data: true
   });
 };
 
@@ -136,15 +148,21 @@ exports.getFreePhotos = function(req, res) {
 exports.accessToPhotos = function(req, res) {
   var userId = parseInt(req.params.photoId, 10);
 
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
 
 exports.pokePhotos = function(req, res) {
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
 
 exports.voteForPhoto = function(req, res) {
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
 
 exports.getList = function(req, res) {

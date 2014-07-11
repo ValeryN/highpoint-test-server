@@ -2,5 +2,7 @@ var models = require('../Model');
 
 
 exports.claim = function(req, res) {
-  res.json(null);
+  res.json({
+    data: true
+  });
 };
