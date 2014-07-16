@@ -113,7 +113,7 @@ app.get('/v201405/users', routes.users.getList);
 
 
 app.get('/developer/settings', routes.developer.options);
-app.post('/developer/settings/option', routes.developer.setOption);
+app.put('/developer/settings/option', routes.developer.setOption);
 app.post('/developer/send', routes.developer.setMessage);
 
 app.get('/apps/developer', routes.developer.app);

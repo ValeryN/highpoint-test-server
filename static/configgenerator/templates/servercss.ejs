@@ -1,0 +1,9 @@
+<%
+  var parts = [];
+
+  for (var name in map) {
+    parts.push('"' + name + '": "' + map[name] + '"');
+  }
+%>module.exports = {
+  <%-parts.join(",\n\t")%>
+};

@@ -1,6 +1,7 @@
-/config.js
-/public/s_dev
-/public/t
+/application/config.js
+/static/config.js
+/static/public/s_dev
+/static/public/t
 /tmp
 
 .DS_Store

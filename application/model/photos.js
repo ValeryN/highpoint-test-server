@@ -3,7 +3,7 @@ var config = require('../config');
 
 
 var getImageSrc = function(name) {
-  return config.address + '/images/photo/' + name;
+  return config.imageServerPath + '/images/photo/' + name;
 };
 
 var model = module.exports = new Model([

@@ -10,18 +10,19 @@ var Option;
 
 /**
  * @typedef {{
- *    type: string,
+ *    key: string,
  *    name: string,
- *    options: Option
+ *    items: Option
  * }}
  */
 var DictionaryItem;
 
 var Dictionary = exports.Dictionary = {
   ME_USER: {
-    type: 'meUser',
+    key: 'meUser',
     name: 'Информация о текущем пользователе',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'пользователь', value: 200 },
       { name: 'неавторизованный пользователь', value: 401 },
       { name: 'ошибка сервера', value: 500 },
@@ -31,18 +32,20 @@ var Dictionary = exports.Dictionary = {
 
 
   AVATAR_CROP: {
-    type: 'avatarCrop',
+    key: 'avatarCrop',
     name: 'Кроп аватара',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'кроп аватара', value: 200 },
       { name: 'ошибка кропа', value: 403 },
       { name: 'ошибка сервера', value: 500 },
     ]
   },
   AVATAR_UPLOAD: {
-    type: 'avatarUpload',
+    key: 'avatarUpload',
     name: 'Загрузка аватара',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'фотография пользователя', value: 200 },
       { name: 'случайная фотография', value: 201 },
       { name: 'фотография №2', value: 202 },
@@ -51,25 +54,28 @@ var Dictionary = exports.Dictionary = {
     ]
   },
   EMAIL_CHANGE: {
-    type: 'emailChange',
+    key: 'emailChange',
     name: 'Подтверждение новой почты',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'неверный токен', value: 403 },
       { name: 'успешно', value: 200 },
     ]
   },
   EMAIL_CONFIRM: {
-    type: 'emailConfirm',
+    key: 'emailConfirm',
     name: 'Подтверждение почты',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'неверный токен', value: 403 },
       { name: 'успешно', value: 200 },
     ]
   },
   MATRIX_USERS: {
-    type: 'matrixUsers',
+    key: 'matrixUsers',
     name: 'Список онлайн-пользователей:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'список пользователей', value: 200 },
       { name: 'пустой список', value: 201 },
       { name: 'ошибка авторизации', value: 401 },
@@ -77,27 +83,30 @@ var Dictionary = exports.Dictionary = {
     ]
   },
   ME_FILTER_UPDATE: {
-    type: 'meFilterUpdate',
+    key: 'meFilterUpdate',
     name: 'Обновление фильтра:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'успешное выполнение', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   ME_USER_SETTINGS_UPDATE: {
-    type: 'meUsersSettingsUpdate',
+    key: 'meUsersSettingsUpdate',
     name: 'Обновление настроек текущего пользователя:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'успешное выполнение', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   MESSAGES_HISTORY: {
-    type: 'messagesHistory',
+    key: 'messagesHistory',
     name: 'История переписки с пользователем:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'список сообщений', value: 200 },
       { name: 'пустой список', value: 201 },
       { name: 'ошибка авторизации', value: 401 },
@@ -105,9 +114,10 @@ var Dictionary = exports.Dictionary = {
     ]
   },
   MESSAGES_UNREAD: {
-    type: 'messagesUnread',
+    key: 'messagesUnread',
     name: 'Список непрочитанных сообщений:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'список сообщений', value: 200 },
       { name: 'пустой список', value: 201 },
       { name: 'ошибка авторизации', value: 401 },
@@ -115,62 +125,69 @@ var Dictionary = exports.Dictionary = {
     ]
   },
   SETTINGS: {
-    type: 'settings',
+    key: 'settings',
     name: 'Настройки приложения:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'хэш настроек', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   SIGNIN: {
-    type: 'signin',
+    key: 'signin',
     name: 'Авторизация:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'успешный вход', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   SIGNUP: {
-    type: 'signup',
+    key: 'signup',
     name: 'Создание аккаунта:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'профиль пользователя', value: 200 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   USERS_FILTER: {
-    type: 'usersFilter',
+    key: 'usersFilter',
     name: 'Обновление параметров фильтра:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'успешное выполнение', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   USERS_UPDATE: {
-    type: 'usersUpdate',
+    key: 'usersUpdate',
     name: 'Завершение регистрации, обновление профиля:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'успешное выполнение', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   USERS_UPDATE_SETTINGS: {
-    type: 'usersUpdateSettings',
+    key: 'usersUpdateSettings',
     name: 'Обновление настроек:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'успешное выполнение', value: 200 },
       { name: 'ошибка авторизации', value: 401 },
       { name: 'ошибка сервера', value: 500 }
     ]
   },
   VALIDATORS_UNIQUENESS: {
-    type: 'validatorsUniqueness',
+    key: 'validatorsUniqueness',
     name: 'Валидация электронной почты:',
-    options: [
+    type: 'radio',
+    items: [
       { name: 'пользователь не существует', value: 404 },
       { name: 'пользователь существует', value: 200 },
       { name: 'ошибка сервера', value: 500 }
@@ -185,7 +202,7 @@ exports.Type = (function() {
   var map = {};
 
   for (var key in Dictionary) {
-    map[key] = Dictionary[key].type;
+    map[key] = Dictionary[key].key;
   }
 
   return map;
@@ -212,7 +229,7 @@ var itemsMap = (function() {
   var map = {};
 
   for (var key in Dictionary) {
-    map[Dictionary[key].type] = Dictionary[key];
+    map[Dictionary[key].key] = Dictionary[key];
   }
 
   return map;
@@ -225,7 +242,7 @@ var valuesMap = exports.valuesMap = (function() {
   var map = {};
 
   for (var type in itemsMap) {
-    map[type] = itemsMap[type].options[0].value;
+    map[type] = itemsMap[type].items[0].value;
   }
 
   return map;

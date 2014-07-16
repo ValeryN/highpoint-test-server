@@ -1,0 +1,121 @@
+.panel {
+  min-height: 100%;
+  position: relative;
+}
+
+.panel-sections {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.panel-section {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.panel-tabScrollContainer {
+  border-right: 1px solid #e8e8e8;
+  bottom: 0;
+  cursor: move;
+  font-size: 12px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 159px;
+
+  .npf-scrollable-container-content {
+    min-height: 100%;
+  }
+}
+
+.panel-tabScrollBar {
+  left: 145px;
+  right: auto;
+}
+
+.panel-sections {
+  left: 160px;
+}
+
+.panel-tabSection {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+
+/**
+ * Inner Content
+ */
+.panel-inner {
+  padding: 12px;
+}
+
+.panel-innerSection {
+  margin-bottom: 20px;
+}
+
+.panel-innerSection-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.panel-innerSection-content {
+  position: relative;
+}
+
+
+/**
+ * Link Item
+ */
+.panel-link {
+  margin-bottom: 7px;
+}
+
+.panel-link-link {
+  border-bottom: 1px dashed #4083b9;
+  color: #4083b9;
+  cursor: pointer;
+
+  &:hover {
+    border-bottom-color: $link-hover-color;
+    color: $link-hover-color;
+  }
+}
+
+.panel-link-input {
+  width: 50px;
+}
+
+
+/**
+ * Radio Item
+ */
+.panel-radio {
+  margin-bottom: 7px;
+}
+
+.panel-radio-header {
+  margin-bottom: 3px;
+}
+
+.panel-radio-option {
+  margin-bottom: 3px;
+}
+
+.panel-radio-input {
+  margin: 0;
+  padding: 0;
+}
+
+.panel-radio-label {
+  padding-left: 10px;
+}

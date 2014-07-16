@@ -3,32 +3,35 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./lib/app.js"
+    "start": "node ./app.js"
   },
   "engines": {
-    "node": ">=1.0"
+    "node": ">=0.10"
   },
   "dependencies": {
     "async": ">=0.1.22",
     "body-parser": "*",
     "compression": "*",
+    "cssmap": "git://github.com/4u/cssmap.git",
+    "closurebuilder": "git://github.com/redscorpix/node-closurebuilder.git",
     "connect-multiparty": "*",
     "cookie-parser": "*",
     "cookie-session": "*",
     "cors": "*",
-    "express": ">=3.0.4",
-    "expresso": "*",
-    "frontdeployer": "git://github.com/redscorpix/frontdeployer.git",
-    "grunt": "*",
-    "grunt-contrib-compass": "*",
-    "grunt-contrib-watch": "*",
+    "ejs": "*",
+    "errorhandler": "*",
+    "express": "*",
+    "gulp": "*",
+    "gulp-compass": "*",
+    "gulp-util": "*",
     "imagemagick": "*",
     "method-override": "*",
     "mkdirp": "*",
     "morgan": "*",
     "ncp": "0.5.x",
+    "node-uuid": "*",
     "ojster": "*",
-    "optimist": ">= 0.3.5",
+    "run-sequence": "*",
     "socket.io": "<1.0"
   },
   "repository": {

@@ -12,6 +12,6 @@ var model = module.exports = new Model([
       maxPeriod: 360,
       minPeriod: 10,
     },
-    webSocketUrls: [config.address],
+    webSocketUrls: config.webSocketServerPaths,
   }
 ], null);

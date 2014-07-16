@@ -1,0 +1,14 @@
+<% @require ojster.Template %>
+
+<% @template dev.panel.templates.Link %>
+<% @inherits ojster.Template %>
+
+
+<% @block main { %>
+<div class="<% @css %>">
+  <span class="<% @css +link %>"><%-d.option.name%></span>
+  <% if (d.inputEnabled) { %>
+    : <%-d.inputPrefix%><input class="<% @css +input %>" value="<%=d.defaultInputValue%>"><%-d.inputSuffix%>
+  <% } %>
+</div>
+<% @block main } %>

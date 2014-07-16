@@ -43,21 +43,31 @@ var getSquareCrop = function(name) {
   return r ? r[2] + 'x' + r[3] + '+' + r[4] + '+' + r[5] : '';
 };
 
+var getSquareCropRect = function(name) {
+  var r = avatarCrops[name];
+  return r ? [r[4], r[5], r[2], r[3]] : '';
+};
+
 var getHighCrop = function(name) {
   var r = avatarCrops[name];
   return r ? r[6] + 'x' + r[7] + '+' + r[8] + '+' + r[9] : '';
 };
 
+var getHighCropRect = function(name) {
+  var r = avatarCrops[name];
+  return r ? [r[8], r[9], r[6], r[7]] : '';
+};
+
 var getSquareImageSrc = function(name) {
-  return config.address + '/images/avatar/square/' + name;
+  return config.imageServerPath + '/images/avatar/square/' + name;
 };
 
 var getHighImageSrc = function(name) {
-  return config.address + '/images/avatar/high/' + name;
+  return config.imageServerPath + '/images/avatar/high/' + name;
 };
 
 var getOriginImageSrc = function(name) {
-  return config.address + '/s/avatars/' + name + '.jpg';
+  return config.imageServerPath + '/s/avatars/' + name + '.jpg';
 };
 
 var avatars = (function() {

@@ -1,0 +1,66 @@
+.goog-tab-bar {
+  @include border-radius(2px 0 0 2px);
+
+  outline: none;
+  position: relative;
+}
+
+.goog-tab-bar-horizontal {
+  left: 0;
+  width: 100%;
+}
+
+.goog-tab-bar-vertical {
+  height: 100%;
+  top: 0;
+}
+
+.goog-tab-bar-bottom {
+  bottom: 0;
+}
+
+.goog-tab-bar-top {
+  top: 0;
+}
+
+.goog-tab-bar-start {
+  left: 0;
+}
+
+.goog-tab-bar-end {
+  right: 0;
+}
+
+
+/**
+ * Tab
+ */
+.goog-tab {
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  overflow: hidden;
+  padding: 10px 10px 9px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.goog-tab-hover {
+  background: #f7f8f9;
+  color: #d14751;
+}
+
+.goog-tab-selected {
+  background: #097dc8;
+  color: #fff;
+  cursor: default;
+}
+
+.goog-tab-bar-horizontal {
+  .goog-tab {
+    float: left;
+  }
+}

@@ -53,12 +53,12 @@ exports.cropAvatar = function(req, res, next) {
           res.json({
             crop: req.body.crop,
             image: {
-              src: config.address + image.src,
+              src: config.imageServerPath + image.src,
               width: image.width,
               height: image.height,
             },
             origin_image: {
-              src: config.address + originImage.src,
+              src: config.imageServerPath + originImage.src,
               width: originImage.width,
               height: originImage.height,
             },
@@ -108,7 +108,7 @@ exports.uploadAvatar = function(req, res, next) {
           if (err) return next(err);
 
           res.json({
-            src: config.address + image.src,
+            src: config.imageServerPath + image.src,
             width: image.width,
             height: image.height,
           });

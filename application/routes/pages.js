@@ -14,7 +14,6 @@ var isCompiled = function(req) {
 
 exports.panel = function(req, res) {
   var template = new MainTemplate({
-    apiAddress: config.apiAddress,
     compiled: isCompiled(req),
     config: config,
   });
