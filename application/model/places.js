@@ -1,7 +1,7 @@
 var Model = require('./Model');
 
 
-module.exports = new Model([
+var model = module.exports = new Model([
   {
     id: 1,
     cityId: 1,
@@ -43,3 +43,10 @@ module.exports = new Model([
     name: 'Парк Горького',
   },
 ]);
+
+
+var idCounter = 100;
+
+model.getNextId = function() {
+  return ++idCounter;
+};

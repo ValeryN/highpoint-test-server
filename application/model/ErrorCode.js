@@ -4,4 +4,5 @@ module.exports = {
   WRONG_PARAMS: 3,
   SERVER_ERROR: 4,
   NOT_FOUND: 5,
+  REQUIRED: 6,
 }

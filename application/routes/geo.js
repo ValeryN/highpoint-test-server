@@ -33,9 +33,11 @@ exports.findLocations = function(req, res) {
   var countries = locations.getCountries(countryIds, true);
 
   res.json({
-    cities: cities,
-    countries: countries,
-    regions: regions,
+    data: {
+      cities: cities,
+      countries: countries,
+      regions: regions,
+    }
   });
 };
 
@@ -56,11 +58,15 @@ exports.getLocations = function(req, res) {
     var countries = locations.getCountries(countryIds, true);
 
     res.json({
-      cities: cities,
-      countries: countries,
-      regions: regions,
+      data: {
+        cities: cities,
+        countries: countries,
+        regions: regions,
+      }
     });
   } else {
-    res.json({});
+    res.json({
+      data: null
+    });
   }
 };

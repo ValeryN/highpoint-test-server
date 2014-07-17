@@ -1,7 +1,7 @@
 var Model = require('./Model');
 
 
-module.exports = new Model([
+var model = module.exports = new Model([
   {
     id: 1,
     name: 'Московский государственный университет имени М. В. Ломоносова',
@@ -123,3 +123,10 @@ module.exports = new Model([
     name: 'Московский государственный строительный университет',
   },
 ]);
+
+
+var idCounter = 100;
+
+model.getNextId = function() {
+  return ++idCounter;
+};

@@ -1,7 +1,7 @@
 var Model = require('./Model');
 
 
-module.exports = new Model([
+var model = module.exports = new Model([
   {
     id: 1,
     name: 'Русский',
@@ -35,3 +35,10 @@ module.exports = new Model([
     name: 'Латинский',
   },
 ]);
+
+
+var idCounter = 100;
+
+model.getNextId = function() {
+  return ++idCounter;
+};

@@ -1,7 +1,7 @@
 var Model = require('./Model');
 
 
-module.exports = new Model([
+var model = module.exports = new Model([
   {
     id: 1,
     name: 'Яндекс',
@@ -35,3 +35,9 @@ module.exports = new Model([
     name: 'Procter and Gamble',
   },
 ]);
+
+var idCounter = 100;
+
+model.getNextId = function() {
+  return ++idCounter;
+};

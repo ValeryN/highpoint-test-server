@@ -4,6 +4,12 @@ var models = require('../Model');
 
 var uploadedAvatar = new models.UploadedAvatar();
 
+var getIds = function(rawIds) {
+  return rawIds ? rawIds.split(',').map(function(strId) {
+    return parseInt(strId, 10) || 0;
+  }) : [];
+};
+
 exports.get = function(req, res) {
   var devOption = devSettings.get(devSettings.Type.ME_USER);
   var status = 200;
@@ -191,4 +197,84 @@ exports.uploadPhoto = function(req, res) {
   var title = req.body.photo ? req.body.photo.title : '';
 
   res.json(models.photos.getRandom());
+};
+
+var addReferenceItem = function(req, res, referenceField) {
+  var name = req.body.name;
+
+  if (name) {
+    res.json({
+      data: {
+        id: models[referenceField].getNextId(),
+        name: name
+      }
+    });
+  } else {
+    res.status(403);
+    res.json({
+      error: {
+        code: models.ErrorCode.WRONG_PARAMS,
+        params: [{
+          code: models.ErrorCode.REQUIRED,
+          name: 'name'
+        }]
+      }
+    });
+  }
+};
+
+var removeReferenceItems = function(req, res, referenceField) {
+  var ids = getIds(req.body.ids);
+
+  res.json({
+    data: ids
+  });
+};
+
+exports.addCareerPost = function(req, res) {
+  addReferenceItem(req, res, 'careerPosts');
+};
+
+exports.removeCareerPosts = function(req, res) {
+  removeReferenceItems(req, res, 'careerPosts');
+};
+
+exports.addCompany = function(req, res) {
+  addReferenceItem(req, res, 'companies');
+};
+
+exports.removeCompanies = function(req, res) {
+  removeReferenceItems(req, res, 'companies');
+};
+
+exports.addLanguage = function(req, res) {
+  addReferenceItem(req, res, 'languages');
+};
+
+exports.removeLanguages = function(req, res) {
+  removeReferenceItems(req, res, 'languages');
+};
+
+exports.addPlace = function(req, res) {
+  addReferenceItem(req, res, 'places');
+};
+
+exports.removePlaces = function(req, res) {
+  removeReferenceItems(req, res, 'places');
+};
+
+exports.addSchool = function(req, res) {
+  addReferenceItem(req, res, 'schools');
+};
+
+exports.removeSchools = function(req, res) {
+  removeReferenceItems(req, res, 'schools');
+};
+
+exports.addSpeciality = function(req, res) {
+  addReferenceItem(req, res, 'specialities');
+};
+
+exports.removeSpecialities = function(req, res) {
+  removeReferenceItems(req, res, 'specialities');
 };

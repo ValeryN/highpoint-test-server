@@ -96,11 +96,31 @@ app.get('/v201405/geo', routes.geo.getLocations);
 app.get('/v201405/geo/find', routes.geo.findLocations);
 
 app.get('/v201405/me', routes.me.get);
+app.post('/v201405/me/career-posts', routes.me.addCareerPost);
+app.delete('/v201405/me/career-posts', routes.me.removeCareerPosts);
+app.post('/v201405/me/companies', routes.me.addCompany);
+app.delete('/v201405/me/companies', routes.me.removeCompanies);
 app.put('/v201405/me/filter', routes.me.updateFilter);
+app.post('/v201405/me/languages', routes.me.addLanguage);
+app.delete('/v201405/me/languages', routes.me.removeLanguages);
+app.post('/v201405/me/places', routes.me.addPlace);
+app.delete('/v201405/me/places', routes.me.removePlaces);
+app.post('/v201405/me/schools', routes.me.addSchool);
+app.delete('/v201405/me/schools', routes.me.removeSchools);
+app.post('/v201405/me/specialities', routes.me.addSpeciality);
+app.delete('/v201405/me/specialities', routes.me.removeSpecialities);
 
 app.get('/v201405/points', routes.points.getList);
 app.post('/v201405/points/:pointId/like', routes.points.like);
 app.post('/v201405/points/:pointId/unlike', routes.points.unlike);
+
+app.get('/v201405/reference', routes.reference.getReference);
+app.get('/v201405/reference/career-posts/find', routes.reference.findCareerPosts);
+app.get('/v201405/reference/companies/find', routes.reference.findCompanies);
+app.get('/v201405/reference/languages/find', routes.reference.findLanguages);
+app.get('/v201405/reference/places/find', routes.reference.findPlaces);
+app.get('/v201405/reference/schools/find', routes.reference.findSchools);
+app.get('/v201405/reference/specialities/find', routes.reference.findSpecialities);
 
 app.get('/v201405/settings', routes.settings.get);
 
