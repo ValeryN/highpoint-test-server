@@ -223,7 +223,7 @@ var addReferenceItem = function(req, res, referenceField) {
   }
 };
 
-var removeReferenceItems = function(req, res, referenceField) {
+var removeReferenceItems = function(req, res) {
   var ids = getIds(req.body.ids);
 
   res.json({
@@ -231,20 +231,59 @@ var removeReferenceItems = function(req, res, referenceField) {
   });
 };
 
-exports.addCareerPost = function(req, res) {
-  addReferenceItem(req, res, 'careerPosts');
+exports.addCareerItem = function(req, res) {
+  var companyId = parseInt(req.body.companyId, 10) || 0;
+  var companyName = req.body.companyName;
+  var fromYear = parseInt(req.body.fromYear, 10) || 0;
+  var postId = parseInt(req.body.postId, 10) || 0;
+  var postName = req.body.postName;
+  var toYear = parseInt(req.body.toYear, 10) || 0;
+  var company = companyId ? models.companies.get(companyId) : null;
+
+  if (!company && companyName) {
+    company = {
+      id: models.companies.getNextId(),
+      name: companyName,
+    };
+    models.companies.add(company);
+  }
+
+  if (company) {
+    var careerPost = postId ? models.careerPosts.get(postId) : null;
+
+    if (!careerPost && postName) {
+      careerPost = {
+        id: models.careerPosts.getNextId(),
+        name: postName,
+      };
+      models.careerPosts.add(careerPost);
+    }
+
+    res.json({
+      data: {
+        id: models.careerItems.getNextId(),
+        companyId: company.id,
+        fromYear: fromYear || null,
+        postId: careerPost ? careerPost.id : null,
+        toYear: toYear || null,
+      }
+    });
+  } else {
+    res.status(403);
+    res.json({
+      error: {
+        code: models.ErrorCode.WRONG_PARAMS,
+        params: [{
+          code: models.ErrorCode.REQUIRED,
+          name: 'company'
+        }]
+      }
+    });
+  }
 };
 
-exports.removeCareerPosts = function(req, res) {
-  removeReferenceItems(req, res, 'careerPosts');
-};
-
-exports.addCompany = function(req, res) {
-  addReferenceItem(req, res, 'companies');
-};
-
-exports.removeCompanies = function(req, res) {
-  removeReferenceItems(req, res, 'companies');
+exports.removeCareerItems = function(req, res) {
+  removeReferenceItems(req, res);
 };
 
 exports.addLanguage = function(req, res) {
@@ -252,7 +291,7 @@ exports.addLanguage = function(req, res) {
 };
 
 exports.removeLanguages = function(req, res) {
-  removeReferenceItems(req, res, 'languages');
+  removeReferenceItems(req, res);
 };
 
 exports.addPlace = function(req, res) {
@@ -260,21 +299,60 @@ exports.addPlace = function(req, res) {
 };
 
 exports.removePlaces = function(req, res) {
-  removeReferenceItems(req, res, 'places');
+  removeReferenceItems(req, res);
 };
 
-exports.addSchool = function(req, res) {
-  addReferenceItem(req, res, 'schools');
+exports.addEducationItem = function(req, res) {
+  var fromYear = parseInt(req.body.fromYear, 10) || 0;
+  var schoolId = parseInt(req.body.schoolId, 10) || 0;
+  var schoolName = req.body.schoolName;
+  var specialityId = parseInt(req.body.specialityId, 10) || 0;
+  var specialityName = req.body.specialityName;
+  var toYear = parseInt(req.body.toYear, 10) || 0;
+  var school = schoolId ? models.schools.get(schoolId) : null;
+
+  if (!school && schoolName) {
+    school = {
+      id: models.schools.getNextId(),
+      name: schoolName,
+    };
+    models.schools.add(school);
+  }
+
+  if (school) {
+    var speciality = specialityId ? models.specialities.get(specialityId) : null;
+
+    if (!speciality && specialityName) {
+      speciality = {
+        id: models.specialities.getNextId(),
+        name: specialityName,
+      };
+      models.specialities.add(speciality);
+    }
+
+    res.json({
+      data: {
+        id: models.educationItems.getNextId(),
+        fromYear: fromYear || null,
+        schoolId: school.id,
+        specialityId: speciality ? speciality.id : null,
+        toYear: toYear || null,
+      }
+    });
+  } else {
+    res.status(403);
+    res.json({
+      error: {
+        code: models.ErrorCode.WRONG_PARAMS,
+        params: [{
+          code: models.ErrorCode.REQUIRED,
+          name: 'school'
+        }]
+      }
+    });
+  }
 };
 
-exports.removeSchools = function(req, res) {
-  removeReferenceItems(req, res, 'schools');
-};
-
-exports.addSpeciality = function(req, res) {
-  addReferenceItem(req, res, 'specialities');
-};
-
-exports.removeSpecialities = function(req, res) {
-  removeReferenceItems(req, res, 'specialities');
+exports.removeEducationItems = function(req, res) {
+  removeReferenceItems(req, res);
 };

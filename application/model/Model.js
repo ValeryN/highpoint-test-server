@@ -6,13 +6,14 @@
 var Model = module.exports = function(items, opt_idKey) {
   this._items = items;
   this._itemsMap = {};
+  this._idKey = null;
 
   if (null !== opt_idKey) {
-    var idKey = opt_idKey || 'id';
+    this._idKey = opt_idKey || 'id';
 
     this._items.forEach(function(item) {
-      if (item[idKey]) {
-        this._itemsMap[item[idKey]] = item;
+      if (item[this._idKey]) {
+        this._itemsMap[item[this._idKey]] = item;
       }
     }, this);
   }
@@ -140,4 +141,12 @@ Model.prototype._padNumber = function(num, length) {
   var index = s.length;
 
   return (new Array(Math.max(0, length - index) + 1).join('0')) + s;
+};
+
+Model.prototype.add = function(item) {
+  this._items.push(item);
+
+  if (this._idKey) {
+    this._itemsMap[item[this._idKey]] = item;
+  }
 };

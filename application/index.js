@@ -96,19 +96,15 @@ app.get('/v201405/geo', routes.geo.getLocations);
 app.get('/v201405/geo/find', routes.geo.findLocations);
 
 app.get('/v201405/me', routes.me.get);
-app.post('/v201405/me/career-posts', routes.me.addCareerPost);
-app.delete('/v201405/me/career-posts', routes.me.removeCareerPosts);
-app.post('/v201405/me/companies', routes.me.addCompany);
-app.delete('/v201405/me/companies', routes.me.removeCompanies);
+app.post('/v201405/me/career', routes.me.addCareerItem);
+app.delete('/v201405/me/career', routes.me.removeCareerItems);
+app.post('/v201405/me/education', routes.me.addEducationItem);
+app.delete('/v201405/me/education', routes.me.removeEducationItems);
 app.put('/v201405/me/filter', routes.me.updateFilter);
 app.post('/v201405/me/languages', routes.me.addLanguage);
 app.delete('/v201405/me/languages', routes.me.removeLanguages);
 app.post('/v201405/me/places', routes.me.addPlace);
 app.delete('/v201405/me/places', routes.me.removePlaces);
-app.post('/v201405/me/schools', routes.me.addSchool);
-app.delete('/v201405/me/schools', routes.me.removeSchools);
-app.post('/v201405/me/specialities', routes.me.addSpeciality);
-app.delete('/v201405/me/specialities', routes.me.removeSpecialities);
 
 app.get('/v201405/points', routes.points.getList);
 app.post('/v201405/points/:pointId/like', routes.points.like);
