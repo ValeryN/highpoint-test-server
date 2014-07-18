@@ -224,7 +224,7 @@ var addReferenceItem = function(req, res, referenceField) {
 };
 
 var removeReferenceItems = function(req, res) {
-  var ids = getIds(req.body.ids);
+  var ids = req.query ? getIds(req.query.ids) : [];
 
   res.json({
     data: ids
