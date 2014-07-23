@@ -10,7 +10,7 @@ var getIds = function(rawIds) {
   }) : [];
 };
 
-var findItems = function(req, res, referenceMethod) {
+var findItems = function(req, res, referenceMethod, jsonField) {
   var maxCount = 20;
   var query = '';
   var limit = maxCount;
@@ -21,33 +21,36 @@ var findItems = function(req, res, referenceMethod) {
     limit = Math.min(Math.max(limit, 1), maxCount);
   }
 
+  var data = {};
+  data[jsonField] = reference[referenceMethod](query, limit);
+
   res.json({
-    data: reference[referenceMethod](query, limit)
+    data: data
   });
 };
 
 exports.findCareerPosts = function(req, res) {
-  findItems(req, res, 'findCareerPosts');
+  findItems(req, res, 'findCareerPosts', 'careerPosts');
 };
 
 exports.findCompanies = function(req, res) {
-  findItems(req, res, 'findCompanies');
+  findItems(req, res, 'findCompanies', 'companies');
 };
 
 exports.findLanguages = function(req, res) {
-  findItems(req, res, 'findLanguages');
+  findItems(req, res, 'findLanguages', 'languages');
 };
 
 exports.findPlaces = function(req, res) {
-  findItems(req, res, 'findPlaces');
+  findItems(req, res, 'findPlaces', 'places');
 };
 
 exports.findSchools = function(req, res) {
-  findItems(req, res, 'findSchools');
+  findItems(req, res, 'findSchools', 'schools');
 };
 
 exports.findSpecialities = function(req, res) {
-  findItems(req, res, 'findSpecialities');
+  findItems(req, res, 'findSpecialities', 'specialities');
 };
 
 exports.getReference = function(req, res) {

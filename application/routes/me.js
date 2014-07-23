@@ -148,13 +148,17 @@ exports.updateFilter = function(req, res) {
       break;
 
     default:
-      var cityIds = req.body.cityIds ? req.body.cityIds.split(',') : [];
-      var genders = req.body.genders ? req.body.genders.split(',') : [];
-      var maxAge = req.body.maxAge;
-      var minAge = req.body.minAge;
-      var viewType = req.body.viewType;
+      var filter = models.filters.getAt(0);
+      filter.cityIds = req.body.cityIds ? getIds(req.body.cityIds) : filter.cityIds;
+      filter.genders = req.body.genders ? getIds(req.body.genders) : filter.genders;
+      filter.maxAge = parseInt(req.body.maxAge, 10) || filter.maxAge;
+      filter.minAge = parseInt(req.body.minAge, 10) || filter.minAge;
+      filter.viewType = parseInt(req.body.viewType, 10) || filter.viewType;
+
       result = {
-        data: true
+        data: {
+          filter: filter
+        },
       };
 
       break;
@@ -199,15 +203,17 @@ exports.uploadPhoto = function(req, res) {
   res.json(models.photos.getRandom());
 };
 
-var addReferenceItem = function(req, res, referenceField) {
+var addReferenceItem = function(req, res, referenceField, jsonField) {
   var name = req.body.name;
 
   if (name) {
+    data = {};
+    data[jsonField] = {
+      id: models[referenceField].getNextId(),
+      name: name
+    };
     res.json({
-      data: {
-        id: models[referenceField].getNextId(),
-        name: name
-      }
+      data: data
     });
   } else {
     res.status(403);
@@ -224,10 +230,12 @@ var addReferenceItem = function(req, res, referenceField) {
 };
 
 var removeReferenceItems = function(req, res) {
-  var ids = req.query ? getIds(req.query.ids) : [];
+  var ids = getIds(req.body.ids);
 
   res.json({
-    data: ids
+    data: {
+      ids: ids
+    }
   });
 };
 
@@ -261,11 +269,13 @@ exports.addCareerItem = function(req, res) {
 
     res.json({
       data: {
-        id: models.careerItems.getNextId(),
-        companyId: company.id,
-        fromYear: fromYear || null,
-        postId: careerPost ? careerPost.id : null,
-        toYear: toYear || null,
+        careerItem: {
+          id: models.careerItems.getNextId(),
+          companyId: company.id,
+          fromYear: fromYear || null,
+          postId: careerPost ? careerPost.id : null,
+          toYear: toYear || null,
+        }
       }
     });
   } else {
@@ -287,7 +297,7 @@ exports.removeCareerItems = function(req, res) {
 };
 
 exports.addLanguage = function(req, res) {
-  addReferenceItem(req, res, 'languages');
+  addReferenceItem(req, res, 'languages', 'language');
 };
 
 exports.removeLanguages = function(req, res) {
@@ -295,7 +305,7 @@ exports.removeLanguages = function(req, res) {
 };
 
 exports.addPlace = function(req, res) {
-  addReferenceItem(req, res, 'places');
+  addReferenceItem(req, res, 'places', 'place');
 };
 
 exports.removePlaces = function(req, res) {
@@ -332,11 +342,13 @@ exports.addEducationItem = function(req, res) {
 
     res.json({
       data: {
-        id: models.educationItems.getNextId(),
-        fromYear: fromYear || null,
-        schoolId: school.id,
-        specialityId: speciality ? speciality.id : null,
-        toYear: toYear || null,
+        educationItem: {
+          id: models.educationItems.getNextId(),
+          fromYear: fromYear || null,
+          schoolId: school.id,
+          specialityId: speciality ? speciality.id : null,
+          toYear: toYear || null,
+        }
       }
     });
   } else {

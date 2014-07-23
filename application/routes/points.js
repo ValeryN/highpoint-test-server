@@ -2,13 +2,17 @@ var models = require('../Model');
 
 exports.like = function(req, res) {
   res.json({
-    data: true
+    data: {
+      success: true
+    }
   });
 };
 
 exports.unlike = function(req, res) {
   res.json({
-    data: true
+    data: {
+      success: true
+    }
   });
 };
 

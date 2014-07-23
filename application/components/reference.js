@@ -233,7 +233,7 @@ Reference.prototype._findItemsByFunc = function(map, func, limit) {
 
     var city = map[strId];
 
-    if (func(city)) {
+    if (func.call(this, city)) {
       result.push(city);
     }
   }
@@ -253,7 +253,7 @@ Reference.prototype._getItems = function(ids, func, opt_distinct) {
   var idsMap = {};
 
   ids.forEach(function(id) {
-    var item = func(id);
+    var item = func.call(this, id);
 
     if (item && (!opt_distinct || !idsMap[item.id])) {
       result.push(item);

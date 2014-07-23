@@ -92,19 +92,21 @@ app.param('pointId', /^\d+$/);
 app.param('token', /^[0-9a-zA-Z]+$/);
 app.param('userId', /^\d+$/);
 
+app.post('/v201405/contacts/:userId/remove', routes.contacts.remove);
+
 app.get('/v201405/geo', routes.geo.getLocations);
 app.get('/v201405/geo/find', routes.geo.findLocations);
 
 app.get('/v201405/me', routes.me.get);
-app.post('/v201405/me/career', routes.me.addCareerItem);
-app.delete('/v201405/me/career', routes.me.removeCareerItems);
-app.post('/v201405/me/education', routes.me.addEducationItem);
-app.delete('/v201405/me/education', routes.me.removeEducationItems);
-app.put('/v201405/me/filter', routes.me.updateFilter);
-app.post('/v201405/me/languages', routes.me.addLanguage);
-app.delete('/v201405/me/languages', routes.me.removeLanguages);
-app.post('/v201405/me/places', routes.me.addPlace);
-app.delete('/v201405/me/places', routes.me.removePlaces);
+app.post('/v201405/me/career/add', routes.me.addCareerItem);
+app.post('/v201405/me/career/remove', routes.me.removeCareerItems);
+app.post('/v201405/me/education/add', routes.me.addEducationItem);
+app.post('/v201405/me/education/remove', routes.me.removeEducationItems);
+app.post('/v201405/me/filter/update', routes.me.updateFilter);
+app.post('/v201405/me/languages/add', routes.me.addLanguage);
+app.post('/v201405/me/languages/remove', routes.me.removeLanguages);
+app.post('/v201405/me/places/add', routes.me.addPlace);
+app.post('/v201405/me/places/remove', routes.me.removePlaces);
 
 app.get('/v201405/points', routes.points.getList);
 app.post('/v201405/points/:pointId/like', routes.points.like);
