@@ -97,7 +97,7 @@ var repeat = function(string, length) {
  * @return {string} {@code num} as a string with the given options.
  */
 var padNumber = function(num, length, opt_precision) {
-  var s = goog.isDef(opt_precision) ? num.toFixed(opt_precision) : String(num);
+  var s = undefined === opt_precision ? String(num) : num.toFixed(opt_precision);
   var index = s.indexOf('.');
   if (index == -1) {
     index = s.length;

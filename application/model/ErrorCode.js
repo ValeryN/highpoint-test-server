@@ -5,4 +5,5 @@ module.exports = {
   SERVER_ERROR: 4,
   NOT_FOUND: 5,
   REQUIRED: 6,
+  WRONG_JSON: 7,
 }

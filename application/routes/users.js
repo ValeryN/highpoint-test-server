@@ -1,3 +1,4 @@
+var dateUtil = require('../core/date');
 var devSettings = require('../settings');
 var models = require('../Model');
 
@@ -67,7 +68,98 @@ exports.confirmEmail = function(req, res) {
   }
 };
 
-exports.getMessageHistory = function(req, res) {
+exports.addMessages = function(req, res, next) {
+  var data = req.body.data;
+  var delay = parseInt(req.body.delay, 10) || 0;
+  var text = req.body.text;
+  var userId = parseInt(req.params.userId, 10);
+  var error = null;
+
+  var createMessage = function(text, delay) {
+    return {
+      id: models.messages.getNextId(),
+      createdAt: dateUtil.dateTimeToIsoString(new Date(+(new Date) + delay)),
+      destinationId: userId,
+      readAt: null,
+      sourceId: 1,
+      text: text,
+    };
+  };
+
+  if (userId) {
+    if (data) {
+      try {
+        data = JSON.parse(req.body.data);
+      } catch (e) { }
+
+      if (data && Array.isArray(data)) {
+        var messages = [];
+
+        data.forEach(function(item) {
+          if (item.text) {
+            messages.push(
+              createMessage(item.text, parseInt(item.delay, 10) || 0));
+          }
+        });
+
+        messages.sort(function(m1, m2) {
+          if (m1.createdAt < m2.createdAt) {
+            return 1;
+          } else if (m1.createdAt > m2.createdAt) {
+            return -1;
+          }
+
+          return 0;
+        });
+
+        res.json({
+          data: {
+            messages: messages,
+          }
+        });
+      } else {
+        error = new Error();
+        error.status = 403;
+        error.result = {
+          error: {
+            code: models.ErrorCode.WRONG_PARAMS,
+            params: [{
+              code: models.ErrorCode.WRONG_JSON,
+              name: 'data'
+            }],
+          }
+        };
+      }
+    } else if (text) {
+      res.json({
+        data: {
+          message: createMessage(text, parseInt(delay, 10) || 0),
+        }
+      });
+    } else {
+      error = new Error();
+      error.status = 403;
+      error.result = {
+        error: {
+          code: models.ErrorCode.WRONG_PARAMS,
+          params: [{
+            code: models.ErrorCode.REQUIRED,
+            name: 'text'
+          }],
+        }
+      };
+    }
+  } else {
+    error = new Error();
+    error.status = 404;
+  }
+
+  if (error) {
+    next(error);
+  }
+};
+
+exports.getMessages = function(req, res) {
   var setting = devSettings.get(devSettings.Type.MESSAGES_HISTORY);
   var status = 200;
   var result = null;
@@ -85,22 +177,33 @@ exports.getMessageHistory = function(req, res) {
       var userId = parseInt(req.params.userId, 10);
 
       if (userId) {
-        var messageItems = models.contactMessages.getAll();
-        var timestamp = +(new Date());
+        var afterMessageId = req.query ?
+          parseInt(req.query.afterMessageId, 10) || 0 : 0;
+        var messageCount = models.messages.getCount();
+        var count = 20;
+        var messages = [];
 
-        messageItems.forEach(function(message, i) {
-          message.id = timestamp + message.id;
+        for (var i = 0; i < count; i++) {
+          var message = models.messages.getAt(
+            (afterMessageId + i) % messageCount);
+          message.id = models.messages.getNextId();
 
-          if (0 == i % 2) {
-            message.source_id = userId;
-            message.destination_id = 1;
+          if (i % 2) {
+            message.sourceId = userId;
+            message.destinationId = 1;
           } else {
-            message.source_id = 1;
-            message.destination_id = userId;
+            message.sourceId = 1;
+            message.destinationId = userId;
           }
-        });
 
-        result = messageItems;
+          messages.push(message);
+
+          result = {
+            data: {
+              messages: messages,
+            }
+          }
+        }
       } else {
         status = 404;
       }
