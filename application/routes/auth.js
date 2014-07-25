@@ -1,6 +1,6 @@
 var ErrorCode = require('../model/ErrorCode');
 var devSettings = require('../settings');
-var models = require('../Model');
+var models = require('../model');
 
 
 exports.signin = function(req, res, next) {

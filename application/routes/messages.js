@@ -1,5 +1,5 @@
 var devSettings = require('../settings');
-var models = require('../Model');
+var models = require('../model');
 
 
 exports.getUnreadMessages = function(req, res) {

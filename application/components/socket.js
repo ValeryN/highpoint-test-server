@@ -1,6 +1,6 @@
 var util = require('util');
 
-var models = require('../Model');
+var models = require('../model');
 var date = require('../core/date');
 
 

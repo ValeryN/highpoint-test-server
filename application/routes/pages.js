@@ -1,7 +1,7 @@
 var ErrorCode = require('../model/ErrorCode');
 var MainTemplate = require('../views/main');
 var config = require('../config');
-var models = require('../Model');
+var models = require('../model');
 
 
 /**

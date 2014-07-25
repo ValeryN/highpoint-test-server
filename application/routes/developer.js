@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var ServerMessage = require('../components/socket').ServerMessage;
-var models = require('../Model');
+var models = require('../model');
 var config = require('../config');
 var devSettings = require('../settings');
 var utils = require('../core/utils');

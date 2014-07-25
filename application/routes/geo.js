@@ -1,5 +1,5 @@
 var Locations = require('../components/locations');
-var models = require('../Model');
+var models = require('../model');
 
 var locations = new Locations();
 

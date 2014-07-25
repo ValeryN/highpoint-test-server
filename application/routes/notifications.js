@@ -1,4 +1,4 @@
-var models = require('../Model');
+var models = require('../model');
 
 
 exports.getList = function(req, res) {

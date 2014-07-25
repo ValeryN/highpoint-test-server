@@ -1,5 +1,5 @@
 var Reference = require('../components/reference');
-var models = require('../Model');
+var models = require('../model');
 
 var reference = new Reference();
 

@@ -1,5 +1,5 @@
 var config = require('../config');
-var models = require('../Model');
+var models = require('../model');
 
 
 /**

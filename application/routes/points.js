@@ -1,4 +1,4 @@
-var models = require('../Model');
+var models = require('../model');
 
 exports.like = function(req, res) {
   res.json({
