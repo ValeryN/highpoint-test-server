@@ -92,7 +92,7 @@ app.param('pointId', /^\d+$/);
 app.param('token', /^[0-9a-zA-Z]+$/);
 app.param('userId', /^\d+$/);
 
-app.post('/v201405/contacts', routes.contacts.getUsers);
+app.get('/v201405/contacts', routes.contacts.getUsers);
 app.post('/v201405/contacts/:userId/remove', routes.contacts.remove);
 
 app.get('/v201405/geo', routes.geo.getLocations);
