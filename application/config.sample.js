@@ -1,7 +1,15 @@
 var rootPath = __dirname + '/..';
 var webPath = rootPath + '/static/public';
-var ip = '127.0.0.1';
+var ip = 'auto'; //'127.0.0.1';
 var port = 3002;
+
+if ('auto' == ip) {
+  var ip = require('./core/utils').getIp();
+
+  if (!ip) {
+    console.error('IP not found');
+  }
+}
 
 module.exports = {
   avatarTypes: {
@@ -11,7 +19,7 @@ module.exports = {
   filesPath: webPath + '/media',
   filesWebPath: '/media',
   imageServerPath: 'http://' + ip + ':' + port,
-  ip: '',// '127.0.0.1',
+  ip: ip,
   photoTypes: {
     s640: [640, 640],
     s1000: [1000, 1000],
