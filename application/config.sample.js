@@ -4,7 +4,7 @@ var ip = 'auto'; //'127.0.0.1';
 var port = 3002;
 
 if ('auto' == ip) {
-  var ip = require('./core/utils').getIp();
+  ip = require('./core/ip').getIp();
 
   if (!ip) {
     console.error('IP not found');
