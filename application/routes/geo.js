@@ -10,7 +10,35 @@ var getIds = function(rawIds) {
   }) : [];
 };
 
-exports.findLocations = function(req, res) {
+/**
+ * @param {!Array.<City>} cities
+ * @return {{regionsMap:!Object.<Region>,countriesMap:!Object.<Country>}}
+ */
+var getMaps = function(cities) {
+  var regionIds = cities.map(function(city) {
+    return city.regionId;
+  });
+  var regions = locations.getRegions(regionIds, true);
+  var countryIds = regions.map(function(region) {
+    return region.countryId;
+  });
+  var countriesMap = {};
+  var regionsMap = {};
+
+  locations.getCountries(countryIds, true).forEach(function(country) {
+    countriesMap[country.id] = country;
+  });
+  regions.forEach(function(region) {
+    regionsMap[region.id] = region;
+  });
+
+  return {
+    countriesMap: countriesMap,
+    regionsMap: regionsMap,
+  }
+};
+
+exports.findCities = function(req, res) {
   var maxCount = 20;
   var query = '';
   var limit = maxCount;
@@ -22,21 +50,26 @@ exports.findLocations = function(req, res) {
   }
 
   var cities = locations.findCities(query, limit);
-
-  var regionIds = cities.map(function(city) {
-    return city.regionId;
-  });
-  var regions = locations.getRegions(regionIds, true);
-  var countryIds = regions.map(function(region) {
-    return region.countryId;
-  });
-  var countries = locations.getCountries(countryIds, true);
+  var maps = getMaps(cities);
 
   res.json({
     data: {
       cities: cities,
-      countries: countries,
-      regions: regions,
+      countries: maps.countriesMap,
+      regions: maps.regionsMap,
+    }
+  });
+};
+
+exports.getPopularCities = function(req, res) {
+  var cities = locations.getCities([2097, 2287, 1956, 796, 1283, 2732, 2644]);
+  var maps = getMaps(cities);
+
+  res.json({
+    data: {
+      cities: cities,
+      countries: maps.countriesMap,
+      regions: maps.regionsMap,
     }
   });
 };

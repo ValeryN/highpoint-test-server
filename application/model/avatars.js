@@ -75,22 +75,22 @@ var avatars = (function() {
 
   for (var i = 1; i <= 20; i++) {
     avatars.push({
-      highCrop: getHighCrop('avatar_' + i),
+      crop: getSquareCrop('avatar_' + i),
+      /*highCrop: getHighCrop('avatar_' + i),
       highImage: {
         src: getHighImageSrc('avatar_' + i),
         width: avatarCrops['avatar_' + i][6],
         height: avatarCrops['avatar_' + i][7],
+      },*/
+      image: {
+        src: getSquareImageSrc('avatar_' + i),
+        width: avatarCrops['avatar_' + i][2],
+        height: avatarCrops['avatar_' + i][3],
       },
       originalImage: {
         src: getOriginImageSrc('avatar_' + i),
         width: avatarCrops['avatar_' + i][0],
         height: avatarCrops['avatar_' + i][1],
-      },
-      squareCrop: getSquareCrop('avatar_' + i),
-      squareImage: {
-        src: getSquareImageSrc('avatar_' + i),
-        width: avatarCrops['avatar_' + i][2],
-        height: avatarCrops['avatar_' + i][3],
       },
     });
   }

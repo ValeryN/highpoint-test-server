@@ -96,7 +96,8 @@ app.get('/v201405/contacts', routes.contacts.getUsers);
 app.post('/v201405/contacts/:userId/remove', routes.contacts.remove);
 
 app.get('/v201405/geo', routes.geo.getLocations);
-app.get('/v201405/geo/find', routes.geo.findLocations);
+app.get('/v201405/geo/cities/find', routes.geo.findCities);
+app.get('/v201405/geo/cities/popular', routes.geo.getPopularCities);
 
 app.get('/v201405/me', routes.me.get);
 app.post('/v201405/me/career/add', routes.me.addCareerItem);
@@ -108,6 +109,8 @@ app.post('/v201405/me/languages/add', routes.me.addLanguage);
 app.post('/v201405/me/languages/remove', routes.me.removeLanguages);
 app.post('/v201405/me/places/add', routes.me.addPlace);
 app.post('/v201405/me/places/remove', routes.me.removePlaces);
+
+app.get('/v201405/messages/unread', routes.messages.getUnreadMessages);
 
 app.get('/v201405/points', routes.points.getList);
 app.post('/v201405/points/:pointId/like', routes.points.like);

@@ -17,7 +17,13 @@ exports.getUnreadMessages = function(req, res) {
       break;
 
     default:
-      result = models.messages.getAll();
+      var ids = [];
+
+      for (var i = 21; i <=35; i++) {
+        ids.push(i);
+      }
+
+      result = models.messages.getList(ids);
       break;
   }
 

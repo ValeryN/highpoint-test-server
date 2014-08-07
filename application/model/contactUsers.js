@@ -1,6 +1,7 @@
 var Currency = require('./Currency');
 var Gender = require('./Gender');
 var Model = require('./Model');
+var Visibility = require('./Visibility');
 var avatars = require('./avatars');
 var careerItems = require('./careerItems');
 var educationItems = require('./educationItems');
@@ -23,6 +24,7 @@ var model = module.exports = new Model([
     name: 'Влад',
     nameForms: ['Влад', 'Влада', 'Владу', 'Влада', 'Владом', 'Владе'],
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 102,
@@ -44,6 +46,7 @@ var model = module.exports = new Model([
       "Президентом Того или типа того", "Президенте Того или типа того"
     ],
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 103,
@@ -61,6 +64,7 @@ var model = module.exports = new Model([
     name: "Татьяна",
     nameForms: ["Татьяна", "Татьяны", "Татьяне", "Татьяну", "Татьяной", "Татьяне"],
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 104,
@@ -82,6 +86,7 @@ var model = module.exports = new Model([
       "Агент поддержки пользователей", "Агент поддержки пользователей"
     ],
     online: true,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 105,
@@ -99,6 +104,7 @@ var model = module.exports = new Model([
     name: "Майк",
     nameForms: null,
     online: true,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 106,
@@ -119,6 +125,7 @@ var model = module.exports = new Model([
       "Жене !!!!", "Женей !!!!", "Жене !!!!"
     ],
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 107,
@@ -136,6 +143,7 @@ var model = module.exports = new Model([
     name: "Екатерина",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 108,
@@ -156,6 +164,7 @@ var model = module.exports = new Model([
       "Алию", "Алией", "Алии"
     ],
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 109,
@@ -173,6 +182,7 @@ var model = module.exports = new Model([
     name: "Гуля",
     nameForms: [ "Гуля", "Гули", "Гуле", "Гулю", "Гулей", "Гуле" ],
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 110,
@@ -189,6 +199,7 @@ var model = module.exports = new Model([
     minEntertainmentPrice: { amount: 100, currency: Currency.USD },
     name: "Светлана",
     nameForms: null,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 111,
@@ -206,6 +217,7 @@ var model = module.exports = new Model([
     name: "Майя",
     nameForms: null,
     online: true,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 112,
@@ -223,6 +235,7 @@ var model = module.exports = new Model([
     name: "Max",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 113,
@@ -240,6 +253,7 @@ var model = module.exports = new Model([
     name: "Анастасия",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 114,
@@ -257,6 +271,7 @@ var model = module.exports = new Model([
     name: "Ася",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 115,
@@ -274,6 +289,7 @@ var model = module.exports = new Model([
     name: "Диана",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 116,
@@ -291,6 +307,7 @@ var model = module.exports = new Model([
     name: "Валентин",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 117,
@@ -308,6 +325,7 @@ var model = module.exports = new Model([
     name: "Rustem",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   },
   {
     id: 118,
@@ -325,5 +343,6 @@ var model = module.exports = new Model([
     name: "Инна",
     nameForms: null,
     online: false,
+    visibility: Visibility.PUBLIC,
   }
 ]);
