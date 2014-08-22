@@ -4,25 +4,25 @@ var models = require('../model');
 
 
 exports.signin = function(req, res, next) {
-  var setting = devSettings.get(devSettings.Type.SIGNIN);
+  var devOptionValue = devSettings.get('signin');
   var status = 200;
-  var result = null;
+  var json = null;
 
-  switch (setting) {
+  switch (devOptionValue) {
     case 401:
     case 500:
-      status = setting;
+      status = devOptionValue;
       break;
 
     default:
       if (req.body.email && req.body.password) {
-        result = {
+        json = {
           data: {
             token: 'authToken'
           }
         };
       } else {
-        result = {
+        json = {
           error: {
             code: ErrorCode.WRONG_USER_OR_PASSWORD
           }
@@ -34,23 +34,23 @@ exports.signin = function(req, res, next) {
   }
 
   if (200 == status) {
-    res.json(result);
+    res.json(json);
   } else {
     var error = new Error('Wrong user or password');
-    error.result = result;
+    error.result = json;
     error.status = status;
     next(error);
   }
 };
 
 exports.signup = function(req, res) {
-  var setting = devSettings.get(devSettings.Type.SIGNUP);
+  var devOptionValue = devSettings.get('signup');
   var status = 200;
-  var result = null;
+  var json = null;
 
-  switch (setting) {
+  switch (devOptionValue) {
     case 500:
-      status = setting;
+      status = devOptionValue;
       break;
 
     default:
@@ -58,7 +58,7 @@ exports.signup = function(req, res) {
       var password = req.body.password || '';
 
       if (email && password) {
-        result = {
+        json = {
           data: {
             user: models.myUsers.get(1)
           }
@@ -71,10 +71,10 @@ exports.signup = function(req, res) {
   }
 
   if (200 == status) {
-    res.json(result);
+    res.json(json);
   } else {
     var error = new Error();
-    error.result = result;
+    error.result = json;
     error.status = status;
     next(error);
   }

@@ -10,19 +10,30 @@ var getIds = function(rawIds) {
   }) : [];
 };
 
-exports.get = function(req, res) {
-  var devOption = devSettings.get(devSettings.Type.ME_USER);
+exports.get = function(req, res, next) {
+  var devOptionValue = devSettings.get('meUser');
   var status = 200;
-  var result = null;
+  var json = null;
 
-  switch (devOption) {
+  switch (devOptionValue) {
+    case 201:
+      json = {
+        data: {
+          user: {
+            id: '1',
+            name: 10
+          }
+        }
+      };
+      break;
+
     case 401:
     case 500:
-      status = devOption;
+      status = devOptionValue;
       break;
 
     default:
-      result = {
+      json = {
         data: {
           user: models.myUsers.get(1)
         }
@@ -31,17 +42,16 @@ exports.get = function(req, res) {
   }
 
   if (200 == status) {
-    res.json(result);
+    res.json(json);
   } else {
     var error = new Error();
-    error.result = result;
     error.status = status;
     next(error);
   }
 };
 
 exports.cropAvatar = function(req, res, next) {
-  var settings = devSettings.get(devSettings.Type.AVATAR_UPLOAD);
+  var settings = devSettings.get('avatarCrop');
   var status;
   var result = null;
 
@@ -88,7 +98,7 @@ exports.cropAvatar = function(req, res, next) {
 };
 
 exports.uploadAvatar = function(req, res, next) {
-  var devOptionValue = devSettings.get(devSettings.Type.AVATAR_UPLOAD);
+  var devOptionValue = devSettings.get('avatarUpload');
   var status;
   var result = null;
 
@@ -136,26 +146,28 @@ exports.uploadAvatar = function(req, res, next) {
   }
 };
 
-exports.updateFilter = function(req, res) {
-  var setting = devSettings.get(devSettings.Type.ME_FILTER_UPDATE);
+exports.updateFilter = function(req, res, next) {
+  var devOptionValue = devSettings.get('meFilterUpdate');
   var status = 200;
-  var result = null;
+  var json = null;
 
-  switch (setting) {
+  switch (devOptionValue) {
     case 401:
     case 500:
-      status = setting;
+      status = devOptionValue;
       break;
 
     default:
       var filter = models.filters.getAt(0);
-      filter.cityIds = req.body.cityIds ? getIds(req.body.cityIds) : filter.cityIds;
-      filter.genders = req.body.genders ? getIds(req.body.genders) : filter.genders;
+      filter.cityIds = req.body.cityIds ?
+        getIds(req.body.cityIds) : filter.cityIds;
+      filter.genders = req.body.genders ?
+        getIds(req.body.genders) : filter.genders;
       filter.maxAge = parseInt(req.body.maxAge, 10) || filter.maxAge;
       filter.minAge = parseInt(req.body.minAge, 10) || filter.minAge;
       filter.viewType = parseInt(req.body.viewType, 10) || filter.viewType;
 
-      result = {
+      json = {
         data: {
           filter: filter
         },
@@ -165,10 +177,10 @@ exports.updateFilter = function(req, res) {
   }
 
   if (200 == status) {
-    res.json(result);
+    res.json(json);
   } else {
     var error = new Error();
-    error.result = result;
+    error.json = json;
     error.status = status;
     next(error);
   }
@@ -239,132 +251,274 @@ var removeReferenceItems = function(req, res) {
   });
 };
 
-exports.addCareerItem = function(req, res) {
-  var companyId = parseInt(req.body.companyId, 10) || 0;
-  var companyName = req.body.companyName;
-  var fromYear = parseInt(req.body.fromYear, 10) || 0;
-  var postId = parseInt(req.body.postId, 10) || 0;
-  var postName = req.body.postName;
-  var toYear = parseInt(req.body.toYear, 10) || 0;
-  var company = companyId ? models.companies.get(companyId) : null;
+exports.addCareerItem = function(req, res, next) {
+  var devOptionValue = devSettings.get('meCareerAdd');
+  var status = 200;
+  var json = null;
 
-  if (!company && companyName) {
-    company = {
-      id: models.companies.getNextId(),
-      name: companyName,
-    };
-    models.companies.add(company);
-  }
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
 
-  if (company) {
-    var careerPost = postId ? models.careerPosts.get(postId) : null;
+    default:
+      var companyId = parseInt(req.body.companyId, 10) || 0;
+      var companyName = req.body.companyName;
+      var fromYear = parseInt(req.body.fromYear, 10) || 0;
+      var postId = parseInt(req.body.postId, 10) || 0;
+      var postName = req.body.postName;
+      var toYear = parseInt(req.body.toYear, 10) || 0;
+      var company = companyId ? models.companies.get(companyId) : null;
 
-    if (!careerPost && postName) {
-      careerPost = {
-        id: models.careerPosts.getNextId(),
-        name: postName,
-      };
-      models.careerPosts.add(careerPost);
-    }
+      if (!company && companyName) {
+        company = {
+          id: models.companies.getNextId(),
+          name: companyName,
+        };
+        models.companies.add(company);
+      }
 
-    res.json({
-      data: {
-        careerItem: {
-          id: models.careerItems.getNextId(),
-          companyId: company.id,
-          fromYear: fromYear || null,
-          postId: careerPost ? careerPost.id : null,
-          toYear: toYear || null,
+      if (company) {
+        var careerPost = postId ? models.careerPosts.get(postId) : null;
+
+        if (!careerPost && postName) {
+          careerPost = {
+            id: models.careerPosts.getNextId(),
+            name: postName,
+          };
+          models.careerPosts.add(careerPost);
         }
+
+        json = {
+          data: {
+            careerItem: {
+              id: models.careerItems.getNextId(),
+              companyId: company.id,
+              fromYear: fromYear || null,
+              postId: careerPost ? careerPost.id : null,
+              toYear: toYear || null,
+            }
+          }
+        };
+      } else {
+        status = 403;
+        json = {
+          error: {
+            code: models.ErrorCode.WRONG_PARAMS,
+            params: [{
+              code: models.ErrorCode.REQUIRED,
+              name: 'company'
+            }]
+          }
+        };
       }
-    });
+
+      break;
+  }
+
+  if (200 == status) {
+    res.json(json);
   } else {
-    res.status(403);
-    res.json({
-      error: {
-        code: models.ErrorCode.WRONG_PARAMS,
-        params: [{
-          code: models.ErrorCode.REQUIRED,
-          name: 'company'
-        }]
+    var error = new Error();
+    error.result = json;
+    error.status = status;
+    next(error);
+  }
+};
+
+exports.removeCareerItems = function(req, res, next) {
+  var devOptionValue = devSettings.get('meCareerRemove');
+  var status = 200;
+
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
+  }
+
+  if (200 == status) {
+    removeReferenceItems(req, res);
+  } else {
+    var error = new Error();
+    error.status = status;
+    next(error);
+  }
+};
+
+exports.addLanguage = function(req, res, next) {
+  var devOptionValue = devSettings.get('meLanguageAdd');
+  var status = 200;
+
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
+  }
+
+  if (200 == status) {
+    addReferenceItem(req, res, 'languages', 'language');
+  } else {
+    var error = new Error();
+    error.status = status;
+    next(error);
+  }
+};
+
+exports.removeLanguages = function(req, res, next) {
+  var devOptionValue = devSettings.get('meLanguageRemove');
+  var status = 200;
+
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
+  }
+
+  if (200 == status) {
+    removeReferenceItems(req, res);
+  } else {
+    var error = new Error();
+    error.status = status;
+    next(error);
+  }
+};
+
+exports.addPlace = function(req, res, next) {
+  var devOptionValue = devSettings.get('mePlaceAdd');
+  var status = 200;
+
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
+  }
+
+  if (200 == status) {
+    addReferenceItem(req, res, 'places', 'place');
+  } else {
+    var error = new Error();
+    error.status = status;
+    next(error);
+  }
+};
+
+exports.removePlaces = function(req, res, next) {
+  var devOptionValue = devSettings.get('mePlaceRemove');
+  var status = 200;
+
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
+  }
+
+  if (200 == status) {
+    removeReferenceItems(req, res);
+  } else {
+    var error = new Error();
+    error.status = status;
+    next(error);
+  }
+};
+
+exports.addEducationItem = function(req, res, next) {
+  var devOptionValue = devSettings.get('meEducationAdd');
+  var status = 200;
+  var json = null;
+
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
+
+    default:
+      var fromYear = parseInt(req.body.fromYear, 10) || 0;
+      var schoolId = parseInt(req.body.schoolId, 10) || 0;
+      var schoolName = req.body.schoolName;
+      var specialityId = parseInt(req.body.specialityId, 10) || 0;
+      var specialityName = req.body.specialityName;
+      var toYear = parseInt(req.body.toYear, 10) || 0;
+      var school = schoolId ? models.schools.get(schoolId) : null;
+
+      if (!school && schoolName) {
+        school = {
+          id: models.schools.getNextId(),
+          name: schoolName,
+        };
+        models.schools.add(school);
       }
-    });
-  }
-};
 
-exports.removeCareerItems = function(req, res) {
-  removeReferenceItems(req, res);
-};
+      if (school) {
+        var speciality = specialityId ? models.specialities.get(specialityId) : null;
 
-exports.addLanguage = function(req, res) {
-  addReferenceItem(req, res, 'languages', 'language');
-};
-
-exports.removeLanguages = function(req, res) {
-  removeReferenceItems(req, res);
-};
-
-exports.addPlace = function(req, res) {
-  addReferenceItem(req, res, 'places', 'place');
-};
-
-exports.removePlaces = function(req, res) {
-  removeReferenceItems(req, res);
-};
-
-exports.addEducationItem = function(req, res) {
-  var fromYear = parseInt(req.body.fromYear, 10) || 0;
-  var schoolId = parseInt(req.body.schoolId, 10) || 0;
-  var schoolName = req.body.schoolName;
-  var specialityId = parseInt(req.body.specialityId, 10) || 0;
-  var specialityName = req.body.specialityName;
-  var toYear = parseInt(req.body.toYear, 10) || 0;
-  var school = schoolId ? models.schools.get(schoolId) : null;
-
-  if (!school && schoolName) {
-    school = {
-      id: models.schools.getNextId(),
-      name: schoolName,
-    };
-    models.schools.add(school);
-  }
-
-  if (school) {
-    var speciality = specialityId ? models.specialities.get(specialityId) : null;
-
-    if (!speciality && specialityName) {
-      speciality = {
-        id: models.specialities.getNextId(),
-        name: specialityName,
-      };
-      models.specialities.add(speciality);
-    }
-
-    res.json({
-      data: {
-        educationItem: {
-          id: models.educationItems.getNextId(),
-          fromYear: fromYear || null,
-          schoolId: school.id,
-          specialityId: speciality ? speciality.id : null,
-          toYear: toYear || null,
+        if (!speciality && specialityName) {
+          speciality = {
+            id: models.specialities.getNextId(),
+            name: specialityName,
+          };
+          models.specialities.add(speciality);
         }
+
+        json = {
+          data: {
+            educationItem: {
+              id: models.educationItems.getNextId(),
+              fromYear: fromYear || null,
+              schoolId: school.id,
+              specialityId: speciality ? speciality.id : null,
+              toYear: toYear || null,
+            }
+          }
+        };
+      } else {
+        status = 403;
+        json = {
+          error: {
+            code: models.ErrorCode.WRONG_PARAMS,
+            params: [{
+              code: models.ErrorCode.REQUIRED,
+              name: 'school'
+            }]
+          }
+        };
       }
-    });
+
+      break;
+  }
+
+  if (200 == status) {
+    res.json(json);
   } else {
-    res.status(403);
-    res.json({
-      error: {
-        code: models.ErrorCode.WRONG_PARAMS,
-        params: [{
-          code: models.ErrorCode.REQUIRED,
-          name: 'school'
-        }]
-      }
-    });
+    var error = new Error();
+    error.result = json;
+    error.status = status;
+    next(error);
   }
 };
 
-exports.removeEducationItems = function(req, res) {
-  removeReferenceItems(req, res);
+exports.removeEducationItems = function(req, res, next) {
+  var devOptionValue = devSettings.get('meEducationRemove');
+  var status = 200;
+
+  switch (devOptionValue) {
+    case 401:
+    case 500:
+      status = devOptionValue;
+      break;
+  }
+
+  if (200 == status) {
+    removeReferenceItems(req, res);
+  } else {
+    var error = new Error();
+    error.status = status;
+    next(error);
+  }
 };

@@ -2,18 +2,34 @@ var devSettings = require('../settings');
 var models = require('../model');
 
 
-exports.getUnreadMessages = function(req, res) {
-  var setting = devSettings.get(devSettings.Type.MESSAGES_UNREAD);
+exports.getUnreadMessages = function(req, res, next) {
+  var devOptionValue = devSettings.get('messagesUnread');
   var status = 200;
-  var result = null;
+  var json = null;
 
-  switch (setting) {
+  switch (devOptionValue) {
     case 201:
+      json = {
+        data: {
+          messages: null
+        }
+      }
+      break;
+
+    case 202:
+      json = {
+        data: {
+          messages: [{
+            id: '1',
+            sourceId: '1',
+          }]
+        }
+      }
       break;
 
     case 401:
     case 500:
-      status = setting;
+      status = devOptionValue;
       break;
 
     default:
@@ -23,15 +39,19 @@ exports.getUnreadMessages = function(req, res) {
         ids.push(i);
       }
 
-      result = models.messages.getList(ids);
+      json = {
+        data: {
+          messages: models.messages.getList(ids)
+        }
+      };
       break;
   }
 
   if (200 == status) {
-    res.json(result);
+    res.json(json);
   } else {
     var error = new Error();
-    error.result = result;
+    error.json = json;
     error.status = status;
     next(error);
   }

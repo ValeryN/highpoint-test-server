@@ -17,96 +17,8 @@ exports.app = function(req, res) {
 
 exports.options = function(req, res) {
   res.json({
+    tabs: devSettings.tabs,
     values: devSettings.valuesMap,
-    tabs: [
-      {
-        name: 'Текущий пользователь',
-        sections: [
-          {
-            name: 'Настройки выдачи HTTP запросов',
-            options: [
-              devSettings.Dictionary.ME_USER,
-              devSettings.Dictionary.ME_FILTER_UPDATE,
-            ]
-          },
-          {
-            name: 'Web Sockets',
-            options: [
-              {
-                name: 'Обновить данные пользователя',
-                type: 'action',
-                value: {
-                  action: ServerMessage.ME_UPDATE,
-                }
-              },
-            ]
-          },
-        ]
-      },
-      {
-        name: 'Настройки приложения',
-        sections: [
-          {
-            name: 'Настройки выдачи HTTP запросов',
-            options: [
-              devSettings.Dictionary.SETTINGS,
-            ]
-          },
-        ]
-      },
-      {
-        name: 'Сообщения',
-        sections: [
-          {
-            name: 'Настройки выдачи HTTP запросов',
-            options: [
-              devSettings.Dictionary.MESSAGES_HISTORY,
-              devSettings.Dictionary.MESSAGES_UNREAD,
-            ]
-          },
-        ]
-      },
-      {
-        name: 'Пользователи',
-        sections: [
-          {
-            name: 'Настройки выдачи HTTP запросов',
-            options: [
-              devSettings.Dictionary.EMAIL_CHANGE,
-              devSettings.Dictionary.EMAIL_CONFIRM,
-              devSettings.Dictionary.SIGNIN,
-              devSettings.Dictionary.SIGNOUT,
-              devSettings.Dictionary.USERS_UPDATE,
-            ]
-          },
-        ]
-      },
-      {
-        name: 'Фотографии',
-        sections: [
-          {
-            name: 'Настройки выдачи HTTP запросов',
-            options: [
-              devSettings.Dictionary.AVATAR_UPLOAD,
-              devSettings.Dictionary.AVATAR_CROP,
-            ]
-          },
-        ]
-      },
-      {
-        name: 'Географические локации',
-        sections: [
-          {
-            name: 'Настройки выдачи HTTP запросов',
-            options: [
-              devSettings.Dictionary.LOCATIONS_CITIES,
-              devSettings.Dictionary.LOCATIONS_REGIONS,
-              devSettings.Dictionary.LOCATIONS_COUNTRIES,
-            ]
-          },
-        ]
-      },
-    ]
   });
 };
 
@@ -180,7 +92,7 @@ exports.getHighAvatar = function(req, res, next) {
 };
 
 exports.getSquareAvatar = function(req, res, next) {
-  getAvatar('high', req, res, next);
+  getAvatar('square', req, res, next);
 };
 
 exports.getPhoto = function(req, res) {
@@ -224,8 +136,7 @@ exports.getPhoto = function(req, res) {
 exports.setMessage = function(req, res) {
   var socketServer = req.app.get('socketServer');
   var message = null;
-  var userId = req.body.userId ?
-    req.body.userId : devSettings.get(devSettings.Type.USER_ID);
+  var userId = req.body.userId ? req.body.userId : devSettings.get('userId');
 
   switch (req.body.action) {
     case ServerMessage.ME_UPDATE:

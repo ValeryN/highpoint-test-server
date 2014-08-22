@@ -2,7 +2,7 @@ var devSettings = require('../settings');
 
 
 exports.uniqueness = function(req, res) {
-  var setting = devSettings.get(devSettings.Type.VALIDATORS_UNIQUENESS);
+  var setting = devSettings.get('validatorsUniqueness');
   var status = 200;
   var result = null;
 

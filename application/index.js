@@ -114,6 +114,7 @@ app.get('/v201405/messages/unread', routes.messages.getUnreadMessages);
 
 app.get('/v201405/points', routes.points.getList);
 app.post('/v201405/points/:pointId/like', routes.points.like);
+app.get('/v201405/points/:pointId/liked', routes.points.getLikedUsers);
 app.post('/v201405/points/:pointId/unlike', routes.points.unlike);
 
 app.get('/v201405/reference', routes.reference.getReference);
@@ -130,6 +131,7 @@ app.post('/v201405/signin', routes.auth.signin);
 app.post('/v201405/signup', routes.auth.signup);
 
 app.get('/v201405/users', routes.users.getList);
+app.get('/v201405/users/:userId', routes.users.getUser);
 app.get('/v201405/users/:userId/messages', routes.users.getMessages);
 app.post('/v201405/users/:userId/messages/add', routes.users.addMessages);
 

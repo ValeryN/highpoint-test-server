@@ -38,7 +38,7 @@ exports.error = function(err, req, res, next) {
         code: ErrorCode.NOT_FOUND
       }
     };
-  } else if (!status) {
+  } else if (!status || 500 == status) {
     status = 500;
     result = result || {
       error: {

@@ -44,7 +44,7 @@ exports.convertImage = function(srcPath, dstPath, options, callback) {
 
     if (options.crop) {
       command.push('-crop', options.crop[2] + 'x' + options.crop[3] + '+' +
-        options.crop[0] + options.crop[1]);
+        options.crop[0] + '+' + options.crop[1]);
     }
 
     if (options.resize) {
@@ -52,7 +52,6 @@ exports.convertImage = function(srcPath, dstPath, options, callback) {
     }
 
     command.push('-strip', '-quality', 85, dstPath);
-
     imagemagick.convert(command, callback);
   }
 };

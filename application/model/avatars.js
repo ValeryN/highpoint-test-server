@@ -102,3 +102,4 @@ var model = module.exports = new Model(avatars, null);
 model.getHighCrop = getSquareCrop;
 model.getHighCropRect = getSquareCropRect;
 model.getSquareCrop = getSquareCrop;
+model.getSquareCropRect = getSquareCropRect;
