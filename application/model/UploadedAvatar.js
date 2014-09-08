@@ -11,7 +11,7 @@ var config = require('../config');
 var UploadedAvatar = module.exports = function() {
 
   /**
-   * @type {{crop:string,src:string,width:number,height:number}?}
+   * @type {{crop:Object,src:string,width:number,height:number}?}
    */
   this.avatar = null;
 
@@ -30,11 +30,6 @@ var UploadedAvatar = module.exports = function() {
    */
   this.imageFilePath = '';
 };
-
-/**
- * @private {RegExp}
- */
-UploadedAvatar._cropRegExp = new RegExp('(\\d+)x(\\d+)(\\+\\d+)(\\+\\d+)');
 
 /**
  * @param {Object} file
@@ -86,43 +81,42 @@ UploadedAvatar.prototype.upload = function(file, callback) {
 };
 
 /**
- * @param {string} cropRaw
+ * @param {{left:number,top:number,width:number,height:number}} cropRect
  * @param {function(Error,Object,Object)} callback
  */
-UploadedAvatar.prototype.crop = function(cropRaw, callback) {
+UploadedAvatar.prototype.crop = function(cropRect, callback) {
   if (this.image) {
-    var matches = UploadedAvatar._cropRegExp.exec(cropRaw);
+    var width = cropRect.width;
+    var height = cropRect.height;
+    var left = cropRect.left;
+    var top = cropRect.top;
+    var basename = path.basename(this.imageFilePath);
+    var newPath = config.tempFilesPath + '/avatar-' + basename;
+    var webPath = config.webTempFilesPath + '/avatar-' + basename;
+    var self = this;
 
-    if (matches) {
-      var width = parseInt(matches[1], 10);
-      var height = parseInt(matches[2], 10);
-      var left = parseInt(matches[3], 10);
-      var top = parseInt(matches[4], 10);
-      var basename = path.basename(this.imageFilePath);
-      var newPath = config.tempFilesPath + '/avatar-' + basename;
-      var webPath = config.webTempFilesPath + '/avatar-' + basename;
-      var self = this;
+    mkdirp(config.tempFilesPath, 0755, function(err) {
+      if (err) return callback(err);
 
-      mkdirp(config.tempFilesPath, 0755, function(err) {
+      var crop = width + 'x' + height + '+' + left + '+' + top;
+      imagemagick.convert([self.imageFilePath, '-crop', crop, newPath], function(err, stdout, stderr) {
         if (err) return callback(err);
 
-        var crop = width + 'x' + height + '+' + left + '+' + top;
-        imagemagick.convert([self.imageFilePath, '-crop', crop, newPath], function(err, stdout, stderr) {
-          if (err) return callback(err);
-
-          self.avatar = {
-            crop: cropRaw,
+        self.avatar = {
+          crop: {
             height: height,
-            src: webPath,
-            width: width,
-          };
-          self.avatarFilePath = newPath;
-          callback(null, self.avatar, self.image);
-        });
+            left: left,
+            top: top,
+            width: width
+          },
+          height: height,
+          src: webPath,
+          width: width,
+        };
+        self.avatarFilePath = newPath;
+        callback(null, self.avatar, self.image);
       });
-    } else {
-      callback(new Error('Wrong crop information.'));
-    }
+    });
   } else {
     callback(new Error('Empty uploaded image'));
   }

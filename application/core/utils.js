@@ -27,8 +27,8 @@ exports.convertImage = function(srcPath, dstPath, options, callback) {
 
     if (options) {
       if (options.crop) {
-        params.push('-crop', options.crop[0], options.crop[1],
-          options.crop[2], options.crop[3]);
+        params.push('-crop', options.crop.left, options.crop.top,
+          options.crop.width, options.crop.height);
       }
 
       if (options.resize) {
@@ -43,8 +43,8 @@ exports.convertImage = function(srcPath, dstPath, options, callback) {
     var command = [srcPath];
 
     if (options.crop) {
-      command.push('-crop', options.crop[2] + 'x' + options.crop[3] + '+' +
-        options.crop[0] + '+' + options.crop[1]);
+      command.push('-crop', options.crop.width + 'x' + options.crop.height +
+        '+' + options.crop.left + '+' + options.crop.top);
     }
 
     if (options.resize) {

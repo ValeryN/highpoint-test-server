@@ -86,3 +86,9 @@ var model = module.exports = new Model([
     title: "Хочу тату"
   }
 ]);
+
+var idCounter = 100;
+
+model.getNextId = function() {
+  return ++idCounter;
+};

@@ -51,7 +51,7 @@ exports.getUnreadMessages = function(req, res, next) {
     res.json(json);
   } else {
     var error = new Error();
-    error.json = json;
+    error.result = json;
     error.status = status;
     next(error);
   }

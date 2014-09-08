@@ -32,6 +32,12 @@ exports.error = function(err, req, res, next) {
         code: ErrorCode.WRONG_TOKEN
       }
     };
+  } else if (403 == status) {
+    result = result || {
+      error: {
+        code: ErrorCode.ACCESS_DENIED
+      }
+    };
   } else if (404 == status) {
     result = result || {
       error: {

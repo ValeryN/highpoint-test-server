@@ -1,8 +1,34 @@
 var ServerMessage = require('./components/socket').ServerMessage;
 
-var settings = exports.settings = {};
-
 var Dictionary = {
+  avatarAdd: {
+    key: 'avatarAdd',
+    name: 'Загрузка и обновление изображения для аватара',
+    type: 'radio',
+    items: [
+      { name: 'изображение пользователя', value: 200 },
+      { name: 'случайное изображение', value: 201 },
+      { name: 'изображение №2', value: 202 },
+      { name: 'некорректные данные', value: 203 },
+      { name: 'неправильный формат файла', value: 4031 },
+      { name: 'слишком большой размер файла', value: 4032 },
+      { name: 'слишком маленький размер изображения', value: 4033 },
+      { name: 'ошибка авторизации', value: 401 },
+      { name: 'ошибка сервера', value: 500 },
+    ]
+  },
+  avatarCrop: {
+    key: 'avatarCrop',
+    name: 'Кроп аватара',
+    type: 'radio',
+    items: [
+      { name: 'кроп аватара', value: 200 },
+      { name: 'некорректные данные', value: 201 },
+      { name: 'отсутствует изображение для кропа', value: 404 },
+      { name: 'ошибка авторизации', value: 401 },
+      { name: 'ошибка сервера', value: 500 },
+    ]
+  },
   contacts: {
     key: 'contacts',
     name: 'Список контактов',
@@ -172,6 +198,56 @@ var Dictionary = {
       { name: 'ошибка сервера', value: 500 }
     ]
   },
+  myPhotos: {
+    key: 'myPhotos',
+    name: 'Список фотографий',
+    type: 'radio',
+    items: [
+      { name: 'список', value: 200 },
+      { name: 'пустой список', value: 201 },
+      { name: 'некорректные данные', value: 202 },
+      { name: 'неавторизованный пользователь', value: 401 },
+      { name: 'ошибка сервера', value: 500 }
+    ]
+  },
+  myPhotosSort: {
+    key: 'myPhotosSort',
+    name: 'Упорядочивание фотографий',
+    type: 'radio',
+    items: [
+      { name: 'упорядочивание', value: 200 },
+      { name: 'неавторизованный пользователь', value: 401 },
+      { name: 'ошибка сервера', value: 500 }
+    ]
+  },
+  photosAdd: {
+    key: 'photosAdd',
+    name: 'Загрузка фотографии',
+    type: 'radio',
+    items: [
+      { name: 'изображение пользователя', value: 200 },
+      { name: 'случайное изображение', value: 201 },
+      { name: 'изображение №2', value: 202 },
+      { name: 'некорректные данные', value: 203 },
+      { name: 'неправильный формат файла', value: 4031 },
+      { name: 'слишком большой размер файла', value: 4032 },
+      { name: 'слишком маленький размер изображения', value: 4033 },
+      { name: 'ошибка авторизации', value: 401 },
+      { name: 'ошибка сервера', value: 500 },
+    ]
+  },
+  photosRemove: {
+    key: 'photosRemove',
+    name: 'Удаление фотографии',
+    type: 'radio',
+    items: [
+      { name: 'удаление фотографии', value: 200 },
+      { name: 'ошибка авторизации', value: 401 },
+      { name: 'отказано в доступе', value: 403 },
+      { name: 'фотография не найдена', value: 404 },
+      { name: 'ошибка сервера', value: 500 },
+    ]
+  },
   points: {
     key: 'points',
     name: 'Список поинтов',
@@ -297,28 +373,6 @@ var Dictionary = {
   },
 
 
-  avatarCrop: {
-    key: 'avatarCrop',
-    name: 'Кроп аватара',
-    type: 'radio',
-    items: [
-      { name: 'кроп аватара', value: 200 },
-      { name: 'ошибка кропа', value: 403 },
-      { name: 'ошибка сервера', value: 500 },
-    ]
-  },
-  avatarUpload: {
-    key:'avatarUpload',
-    name: 'Загрузка аватара',
-    type: 'radio',
-    items: [
-      { name: 'фотография пользователя', value: 200 },
-      { name: 'случайная фотография', value: 201 },
-      { name: 'фотография №2', value: 202 },
-      { name: 'ошибка загрузки', value: 403 },
-      { name: 'ошибка сервера', value: 500 },
-    ]
-  },
   emailChange: {
     key: 'emailChange',
     name: 'Подтверждение новой почты',
@@ -409,6 +463,10 @@ exports.tabs = [
         options: [
           Dictionary.signin,
           Dictionary.meUser,
+          Dictionary.avatarAdd,
+          Dictionary.avatarCrop,
+          Dictionary.myPhotos,
+          Dictionary.myPhotosSort,
           Dictionary.meFilterUpdate,
           Dictionary.meCareerAdd,
           Dictionary.meCareerRemove,
@@ -502,8 +560,8 @@ exports.tabs = [
       {
         name: 'Настройки выдачи HTTP запросов',
         options: [
-          Dictionary.avatarUpload,
-          Dictionary.avatarCrop,
+          Dictionary.photosAdd,
+          Dictionary.photosRemove,
         ]
       },
     ]

@@ -45,7 +45,13 @@ var getSquareCrop = function(name) {
 
 var getSquareCropRect = function(name) {
   var r = avatarCrops[name];
-  return r ? [r[4], r[5], r[2], r[3]] : '';
+
+  return r ? {
+    left: r[4],
+    top: r[5],
+    width: r[2],
+    height: r[3]
+  } : '';
 };
 
 var getHighCrop = function(name) {
@@ -55,7 +61,13 @@ var getHighCrop = function(name) {
 
 var getHighCropRect = function(name) {
   var r = avatarCrops[name];
-  return r ? [r[8], r[9], r[6], r[7]] : '';
+
+  return r ? {
+    left: r[8],
+    top: r[9],
+    width: r[6],
+    height: r[7]
+  } : '';
 };
 
 var getSquareImageSrc = function(name) {
@@ -75,8 +87,8 @@ var avatars = (function() {
 
   for (var i = 1; i <= 20; i++) {
     avatars.push({
-      crop: getSquareCrop('avatar_' + i),
-      /*highCrop: getHighCrop('avatar_' + i),
+      crop: getSquareCropRect('avatar_' + i),
+      /*highCrop: getHighCropRect('avatar_' + i),
       highImage: {
         src: getHighImageSrc('avatar_' + i),
         width: avatarCrops['avatar_' + i][6],

@@ -100,6 +100,8 @@ app.get('/v201405/geo/cities/find', routes.geo.findCities);
 app.get('/v201405/geo/cities/popular', routes.geo.getPopularCities);
 
 app.get('/v201405/me', routes.me.get);
+app.post('/v201405/me/avatar/add', routes.me.addAvatar);
+app.post('/v201405/me/avatar/crop', routes.me.cropAvatar);
 app.post('/v201405/me/career/add', routes.me.addCareerItem);
 app.post('/v201405/me/career/remove', routes.me.removeCareerItems);
 app.post('/v201405/me/education/add', routes.me.addEducationItem);
@@ -107,10 +109,15 @@ app.post('/v201405/me/education/remove', routes.me.removeEducationItems);
 app.post('/v201405/me/filter/update', routes.me.updateFilter);
 app.post('/v201405/me/languages/add', routes.me.addLanguage);
 app.post('/v201405/me/languages/remove', routes.me.removeLanguages);
+app.get('/v201405/me/photos', routes.me.getPhotos);
+app.post('/v201405/me/photos/sort', routes.me.sortPhotos);
 app.post('/v201405/me/places/add', routes.me.addPlace);
 app.post('/v201405/me/places/remove', routes.me.removePlaces);
 
 app.get('/v201405/messages/unread', routes.messages.getUnreadMessages);
+
+app.post('/v201405/photos/add', routes.photos.addPhoto);
+app.post('/v201405/photos/:photoId/remove', routes.photos.removePhoto);
 
 app.get('/v201405/points', routes.points.getList);
 app.post('/v201405/points/:pointId/like', routes.points.like);

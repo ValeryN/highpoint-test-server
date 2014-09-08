@@ -6,7 +6,21 @@ var model = module.exports = new Model([
   {
     avatar: {
       maxFileSize: 1024 * 1024 * 10, // 10 МБ
-      minImageSize: [640, 640]
+      minCropSize: {
+        width: 640,
+        height: 640
+      },
+      minImageSize: {
+        width: 640,
+        height: 640
+      }
+    },
+    photo: {
+      maxFileSize: 1024 * 1024 * 10, // 10 МБ
+      minImageSize: {
+        width: 640,
+        height: 640
+      }
     },
     point: {
       maxPeriod: 360,

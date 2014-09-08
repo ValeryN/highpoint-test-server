@@ -6,4 +6,9 @@ module.exports = {
   NOT_FOUND: 5,
   REQUIRED: 6,
   WRONG_JSON: 7,
-}
+  WRONG_FILE_FORMAT: 8,
+  TOO_LARGE_FILE: 9,
+  TOO_SMALL_SIZE: 10,
+  ACCESS_DENIED: 11,
+  WRONG_FORMAT: 12,
+};
