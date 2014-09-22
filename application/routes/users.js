@@ -89,7 +89,7 @@ exports.addMessages = function(req, res, next) {
       var createMessage = function(text, delay) {
         return {
           id: models.messages.getNextId(),
-          createdAt: dateUtil.dateTimeToIsoString(new Date(+(new Date) + delay)),
+          createdAt: dateUtil.dateTimeToIsoString(new Date(+(new Date) + delay), true),
           destinationId: userId,
           readAt: null,
           sourceId: 1,
@@ -211,29 +211,12 @@ exports.getMessages = function(req, res, next) {
       if (userId) {
         var afterMessageId = req.query ?
           parseInt(req.query.afterMessageId, 10) || 0 : 0;
-        var messageCount = models.messages.getCount();
-        var count = 20;
-        var messages = [];
+        var messages = models.userMessages(userId, 1).
+          getList(afterMessageId);
 
-        for (var i = 0; i < count; i++) {
-          var message = models.messages.getAt(
-            (afterMessageId + i) % messageCount);
-          message.id = models.messages.getNextId();
-
-          if (i % 2) {
-            message.sourceId = userId;
-            message.destinationId = 1;
-          } else {
-            message.sourceId = 1;
-            message.destinationId = userId;
-          }
-
-          messages.push(message);
-
-          json = {
-            data: {
-              messages: messages,
-            }
+        json = {
+          data: {
+            messages: messages,
           }
         }
       } else {

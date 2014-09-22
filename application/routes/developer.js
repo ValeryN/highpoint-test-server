@@ -95,7 +95,7 @@ exports.getSquareAvatar = function(req, res, next) {
   getAvatar('square', req, res, next);
 };
 
-exports.getPhoto = function(req, res) {
+exports.getPhoto = function(req, res, next) {
   var name = req.params.photoToken;
   var fileName = config.webPath + '/s/photos/' + name + '.jpg';
   var photoTypes = config.photoTypes;
@@ -133,7 +133,7 @@ exports.getPhoto = function(req, res) {
   }
 };
 
-exports.setMessage = function(req, res) {
+exports.setMessage = function(req, res, next) {
   var socketServer = req.app.get('socketServer');
   var message = null;
   var userId = req.body.userId ? req.body.userId : devSettings.get('userId');
