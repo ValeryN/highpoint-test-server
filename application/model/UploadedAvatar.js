@@ -36,9 +36,17 @@ var UploadedAvatar = module.exports = function() {
  * @param {function(Error,Object)} callback
  */
 UploadedAvatar.prototype.upload = function(file, callback) {
-  var basename = path.basename(file.path);
-  var newPath  = config.tempFilesPath    + '/' + basename;
-  var webPath  = config.webTempFilesPath + '/' + basename;
+  var ext = '';
+
+  if (-1 < file.type.indexOf('jpeg') || -1 < file.type.indexOf('jpeg')) {
+    ext = 'jpg';
+  } else if (-1 < file.type.indexOf('png')) {
+    ext = 'png';
+  }
+
+  var basename = path.basename(file.path, '.' + ext);
+  var newPath  = config.tempFilesPath    + '/' + basename + '.' + ext;
+  var webPath  = config.webTempFilesPath + '/' + basename + '.' + ext;
   var self = this;
 
   var mkdir = function(file, callback) {
